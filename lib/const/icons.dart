@@ -1,0 +1,1 @@
+String linkIcon = "assets/link_icon.png";
