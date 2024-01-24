@@ -45,7 +45,7 @@ class _DetailScreenState extends State<DetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Image.asset(salan),
-              Image.file(widget.image!,fit: BoxFit.cover,
+              Image.file(widget.image!,fit: BoxFit.fill,
               width: size.width,
               height: size.height*0.3,),
               const SizedBox(

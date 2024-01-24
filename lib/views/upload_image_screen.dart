@@ -15,8 +15,8 @@ import 'package:foodfinder/controller/upload_image_controller/upload_image_contr
 class _UploadImageScreenState extends State<UploadImageScreen> {
     UploadImageController uploadImageController = UploadImageController();
 
-  Future getImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future getImage(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
 
     setState(() {
       if (pickedFile != null) {
@@ -51,7 +51,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                   
+                   getImage(ImageSource.camera);
                     // Navigator.push(context, MaterialPageRoute(builder: (context)
                     // =>const DetailScreen()));
                   },
@@ -61,7 +61,9 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
             ),
                 GestureDetector(
                   onTap: () {
-                     getImage();
+                     getImage(
+                      ImageSource.gallery
+                     );
                   },
                   child: Image.asset(browseFileBtn))
               ],
