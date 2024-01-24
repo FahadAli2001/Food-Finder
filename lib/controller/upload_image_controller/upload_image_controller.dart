@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class UploadImageController{
   File? image;
 
+  // ignore: prefer_typing_uninitialized_variables
   var apiResData;
 
 
