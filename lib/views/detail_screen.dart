@@ -15,6 +15,7 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -44,7 +45,9 @@ class _DetailScreenState extends State<DetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Image.asset(salan),
-              Image.file(widget.image!,fit: BoxFit.fill,),
+              Image.file(widget.image!,fit: BoxFit.cover,
+              width: size.width,
+              height: size.height*0.3,),
               const SizedBox(
                 height: 15,
               ),
@@ -80,24 +83,24 @@ class _DetailScreenState extends State<DetailScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
-                children: [
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "4.5 (189 Reviews)",
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              // const Row(
+              //   children: [
+              //     Icon(
+              //       Icons.star,
+              //       color: Colors.yellow,
+              //     ),
+              //     SizedBox(
+              //       width: 15,
+              //     ),
+              //     Text(
+              //       "4.5 (189 Reviews)",
+              //       style: TextStyle(color: Colors.white, fontSize: 14),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
               const Text(
                 "Ingredients",
                 style: TextStyle(
