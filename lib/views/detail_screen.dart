@@ -4,7 +4,9 @@ import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/views/map_screen.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key});
+  var apiData;
+  var image;
+    DetailScreen({super.key,required this.apiData,required this.image});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -41,19 +43,20 @@ class _DetailScreenState extends State<DetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(salan),
+              //Image.asset(salan),
+              Image.file(widget.image!,fit: BoxFit.fill,),
               const SizedBox(
                 height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Chicken Curry",
-                    style: TextStyle(
+                    Text(
+                    widget.apiData['predicted_title'],
+                    style:const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 22),
+                        fontSize: 25),
                   ),
                   SizedBox(
                     child: Row(
@@ -100,39 +103,19 @@ class _DetailScreenState extends State<DetailScreen> {
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 17),
+                    fontSize: 19),
               ),
                const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Chicken",
-                style: TextStyle(
+               Text(
+                widget.apiData["recipe_details"][0]['ingredients'],
+                style:const TextStyle(
                     color: Colors.white,
                      
                     fontSize: 15.5),
               ),
-              const Text(
-                "1/2 onion",
-                style: TextStyle(
-                    color: Colors.white,
-                    
-                    fontSize: 15.5),
-              ),
-              const Text(
-                "Red Paper",
-                style: TextStyle(
-                    color: Colors.white,
-                     
-                    fontSize: 15.5),
-              ),
-              const Text(
-                "Butter",
-                style: TextStyle(
-                    color: Colors.white,
-                    
-                    fontSize: 15.5),
-              ),
+           
             const  SizedBox(
                 height: 15,
               ),
@@ -141,16 +124,17 @@ class _DetailScreenState extends State<DetailScreen> {
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 17),
+                    fontSize: 19),
               ),
                const  SizedBox(
                 height: 15,
               ),
-            const  Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rhoncus et lacus in fringilla. Sed tempus semper turpis, ac malesuada quam proin. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rhoncus et lacus in fringilla. Sed tempus semper turpis, ac malesuada quam proin luctus. Sed tempus semper turpis, ac malesuada quam proin.",
-                 style: TextStyle(
+               Text(widget.apiData["recipe_details"][0]['instructions'],
+                 style:const TextStyle(
                     color: Colors.white,
                     
-                    fontSize: 15),)
+                    fontSize: 15),),
+                   const SizedBox(height: 20,)
             ],
           ),
         ),

@@ -1,6 +1,9 @@
+import 'dart:io';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
-import 'package:foodfinder/views/detail_screen.dart';
+import 'package:foodfinder/controller/upload_image_controller/upload_image_controller.dart';
+ import 'package:image_picker/image_picker.dart';
 
  class UploadImageScreen extends StatefulWidget {
   const UploadImageScreen({super.key});
@@ -10,6 +13,20 @@ import 'package:foodfinder/views/detail_screen.dart';
 }
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
+    UploadImageController uploadImageController = UploadImageController();
+
+  Future getImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+       uploadImageController.image = File(pickedFile.path);
+       uploadImageController.sendImageToAPI(context);
+      } else {
+        log('No image selected.');
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return   Scaffold(
@@ -26,7 +43,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(uploadImage),
+          uploadImageController.image == null ?  Image.asset(uploadImage):Image.file(uploadImageController.image!),
           const  SizedBox(
               height: 70,
             ),
@@ -34,15 +51,19 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    
-                    Navigator.push(context, MaterialPageRoute(builder: (context)
-                    =>const DetailScreen()));
+                   
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)
+                    // =>const DetailScreen()));
                   },
                   child: Image.asset(captureImageBtn)),
                  const  SizedBox(
               width: 15,
             ),
-                Image.asset(browseFileBtn)
+                GestureDetector(
+                  onTap: () {
+                     getImage();
+                  },
+                  child: Image.asset(browseFileBtn))
               ],
             )
           ],
