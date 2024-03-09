@@ -6,18 +6,12 @@ import 'package:foodfinder/views/detail_screen.dart';
 import 'package:http/http.dart' as http;
 class UploadImageController{
   File? image;
-
-  // ignore: prefer_typing_uninitialized_variables
   var apiResData;
-
-
+  
     Future<void> sendImageToAPI(context) async {
-    var uri = Uri.parse('https://f2q64phc-5000.inc1.devtunnels.ms/predict');
+    var uri = Uri.parse('https://m966bfcp-5000.asse.devtunnels.ms/predict');
     var request = http.MultipartRequest('POST', uri);
-
-    // Attach the image file to the request
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
-
     try {
       var response = await request.send();
       if (response.statusCode == 200) {
@@ -33,8 +27,6 @@ class UploadImageController{
                     )));
       } else {
         log('Failed to send image. Status code: ${response.statusCode}');
-       
-         
       }
     } catch (error) {
       log('Error sending image: $error');
