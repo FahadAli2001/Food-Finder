@@ -6,7 +6,15 @@ import 'package:foodfinder/views/detail_screen.dart';
 import 'package:http/http.dart' as http;
 class UploadImageController{
   File? image;
-  var apiResData;
+  // ignore: prefer_typing_uninitialized_variables
+  var _apiResData;
+
+  // ignore: unnecessary_getters_setters
+  get apiResData => _apiResData;
+
+  set apiResData(value) {
+    _apiResData = value;
+  }
   
     Future<void> sendImageToAPI(context) async {
     var uri = Uri.parse('https://m966bfcp-5000.asse.devtunnels.ms/predict');
