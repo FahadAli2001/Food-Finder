@@ -11,3 +11,6 @@ String saveRecipeBtn = "assets/save_recipe.png";
 String map = "assets/map.png";
 String blackBackBtn = "assets/black_back_btn.png";
 String restaurants = "assets/restaurant.png";
+String loginBtn = "assets/login_btn.png";
+String signupBtn = "assets/signup_btn.png";
+String logoutBtn = "assets/logout_btn.png";
