@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/widgets/custom_drawer.dart';
 
 import '../const/images.dart';
@@ -32,12 +34,19 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
           title: Image.asset(logo),
           centerTitle: true,
-          actions:const [
-            CircleAvatar(
-              radius: 15,
-              backgroundColor: Colors.white,
+          actions:  [
+            
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)
+                =>const ProfileScreen()));
+              },
+              child:const CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.white,
+              ),
             ),
-            SizedBox(
+         const   SizedBox(
               width: 15,
             )
           ],

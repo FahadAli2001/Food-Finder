@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
- import 'package:foodfinder/const/images.dart';
+import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/signup_screen.dart';
 import 'package:foodfinder/widgets/custom_textfield.dart';
@@ -62,9 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Checkbox(
-                        checkColor: Colors.red,
-                        value: true,
-                        onChanged: (val) {}),
+                      checkColor: Colors.red,  
+                      activeColor: Colors
+                          .white, 
+                      value: true,
+                      onChanged: (bool? value) {},
+                    ),
                     SizedBox(
                       width: size.width * 0.02,
                     ),
@@ -74,28 +77,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   ],
                 ),
-                 SizedBox(
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()));
+                    },
+                    child: Image.asset(loginBtn)),
+                SizedBox(
                   height: size.height * 0.02,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)
-                    =>const HomeScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignupScreen()));
                   },
-                  child: Image.asset(loginBtn)),
-                 SizedBox(
-                  height: size.height * 0.02,
-                ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)
-                  =>const SignupScreen()));
-                },
-                child: const  Text("Don't have an account ? Create a new one",
-                  style: TextStyle(
-                    color: Colors.white
-                  ),),
-              )
+                  child: const Text(
+                    "Don't have an account ? Create a new one",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
               ],
             ),
           ),
