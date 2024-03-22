@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/upload_image_controller/upload_image_controller.dart';
- import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
- class UploadImageScreen extends StatefulWidget {
+class UploadImageScreen extends StatefulWidget {
   const UploadImageScreen({super.key});
 
   @override
@@ -13,23 +13,25 @@ import 'package:foodfinder/controller/upload_image_controller/upload_image_contr
 }
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
-    UploadImageController uploadImageController = UploadImageController();
+  UploadImageController uploadImageController = UploadImageController();
 
   Future getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
 
     setState(() {
       if (pickedFile != null) {
-       uploadImageController.image = File(pickedFile.path);
-       uploadImageController.sendImageToAPI(context);
+        uploadImageController.image = File(pickedFile.path);
+        uploadImageController.sendImageToAPI(context);
       } else {
         log('No image selected.');
       }
     });
+    log(uploadImageController.image.toString());
   }
+
   @override
   Widget build(BuildContext context) {
-    return   Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -43,29 +45,29 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          uploadImageController.image == null ?  Image.asset(uploadImage):Image.file(uploadImageController.image!),
-          const  SizedBox(
+            uploadImageController.image == null
+                ? Image.asset(uploadImage)
+                : Image.file(uploadImageController.image!),
+            const SizedBox(
               height: 70,
             ),
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {
-                   getImage(ImageSource.camera);
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)
-                    // =>const DetailScreen()));
-                  },
-                  child: Image.asset(captureImageBtn)),
-                 const  SizedBox(
-              width: 15,
-            ),
+                    onTap: () {
+                      getImage(ImageSource.camera);
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)
+                      // =>  DetailScreen()));
+                    },
+                    child: Image.asset(captureImageBtn)),
+                const SizedBox(
+                  width: 15,
+                ),
                 GestureDetector(
-                  onTap: () {
-                     getImage(
-                      ImageSource.gallery
-                     );
-                  },
-                  child: Image.asset(browseFileBtn))
+                    onTap: () {
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Image.asset(browseFileBtn))
               ],
             )
           ],

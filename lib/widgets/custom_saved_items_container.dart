@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:foodfinder/const/images.dart';
 
 class CustomSavedItemsContainer extends StatelessWidget {
@@ -54,7 +52,6 @@ class CustomSavedItemsContainer extends StatelessWidget {
                   Text(
                       'Lorem ipsum dolor sit amet, \n consectetur adipiscing elit ...',
                       overflow: TextOverflow.ellipsis,
-                      
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: MediaQuery.of(context).size.height * 0.016,

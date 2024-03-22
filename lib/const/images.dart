@@ -15,3 +15,4 @@ String loginBtn = "assets/login_btn.png";
 String signupBtn = "assets/signup_btn.png";
 String logoutBtn = "assets/logout_btn.png";
 String changePasswordBtn = "assets/update_pass_btn.png";
+String uploadbtn = "assets/upload_img.png";
