@@ -176,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: size.height * 0.025),
                     ),
+                    //
                     Text(
                       'view all',
                       style: TextStyle(
