@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:foodfinder/const/images.dart';
+ import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/signup_screen.dart';
 import 'package:foodfinder/widgets/custom_textfield.dart';
@@ -42,8 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Image.asset(
                   logo,
-                  height: 70,
-                  width: 200,
+                 filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
                 ),
                 SizedBox(

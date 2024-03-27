@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:foodfinder/const/images.dart';
+ import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/login_screen.dart';
 
@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               logo,
               filterQuality: FilterQuality.high,
               fit: BoxFit.fill,
-              height: size.height * 0.08,
+             
             ),
             SizedBox(
               height: size.height * 0.09,
@@ -54,21 +54,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           builder: (context) => const LoginScreen()));
                 },
                 child: Image.asset(loginBtn)),
-            SizedBox(
-              height: size.height * 0.3,
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
-                },
-                child: const Text(
-                  "Skip -->",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+           
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                  },
+                  child: const Text(
+                    "Skip -->",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
               ),
             )

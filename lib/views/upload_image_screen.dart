@@ -31,6 +31,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
