@@ -49,10 +49,11 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
             uploadImageController.image == null
                 ? Image.asset(uploadImage)
                 : Image.file(uploadImageController.image!),
-            const SizedBox(
-              height: 70,
+              SizedBox(
+              height: size.height *0.1,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                     onTap: () {
@@ -61,8 +62,8 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                       // =>  DetailScreen()));
                     },
                     child: Image.asset(captureImageBtn)),
-                const SizedBox(
-                  width: 15,
+                  SizedBox(
+                  width: size.width *0.02,
                 ),
                 GestureDetector(
                     onTap: () {

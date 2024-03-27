@@ -4,7 +4,9 @@ import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/views/map_screen.dart';
 
 class DetailScreen extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var apiData;
+  // ignore: prefer_typing_uninitialized_variables
   var image;
     DetailScreen({super.key,required this.apiData,required this.image});
 
