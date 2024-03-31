@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:foodfinder/model/user_model.dart';
+import 'package:foodfinder/views/edit_profile.dart';
+
+import '../controller/auth_controller/login_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final UserModel? userModel;
+  const ProfileScreen({super.key, this.userModel});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  LoginController loginController = LoginController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -15,28 +21,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Scaffold(
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(15),
-          child: Container(
-            width: size.width,
-            height: size.height * 0.065,
-            color: const Color(0xffCA0000),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: size.width * 0.03,
-                ),
-                Text(
-                  'Log Out',
-                  style: TextStyle(
-                    fontSize: size.height * 0.02,
+          child: GestureDetector(
+            onTap:(){
+              loginController.signOut(context);
+            },
+            child: Container(
+              width: size.width,
+              height: size.height * 0.065,
+              color: const Color(0xffCA0000),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.logout,
                     color: Colors.white,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: size.width * 0.03,
+                  ),
+                  Text(
+                    'Log Out',
+                    style: TextStyle(
+                      fontSize: size.height * 0.02,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -62,18 +73,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.03,
               ),
-              const CircleAvatar(
-                radius: 50,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.black,
-                ),
-              ),
+               widget.userModel!.profileImage != null
+                      ? Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image:
+                                      NetworkImage(widget.userModel!.profileImage!))),
+                        )
+                      : const CircleAvatar(
+                          radius:50,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                        ),
               SizedBox(
                 height: size.height * 0.02,
               ),
               Text(
-                'Hamza Riaz',
+               '${widget.userModel?.fname ?? ''} ${widget.userModel?.lname ?? 'Guest'}',
+
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: size.height * 0.03,
@@ -140,28 +163,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.04,
               ),
-              Container(
-                width: size.width,
-                height: size.height * 0.065,
-                color: const Color(0xffCA0000),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: size.width * 0.03,
-                    ),
-                    Text(
-                      'Edit Profile',
-                      style: TextStyle(
-                        fontSize: size.height * 0.02,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>   EditProfileScreen(
+                            userModel :widget.userModel
+                          )));
+                },
+                child: Container(
+                  width: size.width,
+                  height: size.height * 0.065,
+                  color: const Color(0xffCA0000),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.edit,
                         color: Colors.white,
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: size.width * 0.03,
+                      ),
+                      Text(
+                        'Edit Profile',
+                        style: TextStyle(
+                          fontSize: size.height * 0.02,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -179,12 +212,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(
                 width: size.width,
-                child:const Divider(
+                child: const Divider(
                   thickness: 0.3,
                   color: Colors.white,
                 ),
               ),
-               SizedBox(
+              SizedBox(
                 height: size.height * 0.02,
               ),
               Align(
@@ -199,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(
                 width: size.width,
-                child:const Divider(
+                child: const Divider(
                   thickness: 0.3,
                   color: Colors.white,
                 ),

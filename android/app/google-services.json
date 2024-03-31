@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797741150920",
+    "project_id": "food-finder-fc420",
+    "storage_bucket": "food-finder-fc420.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797741150920:android:21101e6f24a87476fe6bfd",
+        "android_client_info": {
+          "package_name": "com.example.foodfinder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_0bTpQf_-iHal3mvZn7VpMVKVzqCOZK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

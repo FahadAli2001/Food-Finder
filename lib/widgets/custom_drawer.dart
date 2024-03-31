@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foodfinder/const/images.dart';
+import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/change_password_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/saved_items_screen.dart';
 import 'package:foodfinder/views/shared_recipe_screen.dart';
 
+import '../controller/auth_controller/login_controller.dart';
+
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({super.key});
+  UserModel? userModel;
+
+  CustomDrawer({super.key, this.userModel});
+  LoginController loginController = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,31 +30,41 @@ class CustomDrawer extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.black,
-                    ),
-                  ),
+                  userModel!.profileImage != null
+                      ? Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image:
+                                      NetworkImage(userModel!.profileImage!))),
+                        )
+                      : const CircleAvatar(
+                          radius: 35,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                        ),
                   SizedBox(
-                    width: 20,
+                    width: size.width * 0.05,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hamza Riaz",
-                        style: TextStyle(
+                        '${userModel?.fname ?? ''} ${userModel?.lname ?? 'Guest'}',
+                        style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                      Text(
+                      const Text(
                         "Food Lover",
                         style: TextStyle(
                           color: Colors.white,
@@ -116,19 +132,19 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
 
-                ListTile(
-                onTap:() {
-                   Navigator.push(
+              ListTile(
+                onTap: () {
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const SharedRecipeScreen()));
                 },
-                leading: Icon(
+                leading: const Icon(
                   Icons.share,
                   color: Colors.white,
                   size: 30,
                 ),
-                title: Text(
+                title: const Text(
                   "Total Recipes Share",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
@@ -154,15 +170,20 @@ class CustomDrawer extends StatelessWidget {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.25,
-              ),
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Image.asset(
-                    logoutBtn,
-                    height: 70,
-                  ))
+
+              Expanded(
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        loginController.signOut(context);
+                      },
+                      child: Image.asset(
+                        logoutBtn,
+                        height: 70,
+                      ),
+                    )),
+              )
             ],
           ),
         ),

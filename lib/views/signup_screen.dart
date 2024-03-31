@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:foodfinder/const/images.dart';
 
+import '../controller/auth_controller/signup_controller.dart';
 import '../widgets/custom_textfield.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -11,6 +13,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
+  SignupController signupcontroller = SignupController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -48,30 +52,54 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: size.height * 0.05,
                 ),
-                const CustomTextField(labelText: 'First Name', hintext: 'First Name'),
+                 CustomTextField(
+                  obsecure: false,
+                  controller: signupcontroller.firstNameController,
+                  labelText: 'First Name', hintext: 'First Name'),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                const CustomTextField(
+                  CustomTextField(
+                    obsecure: false,
+                     controller: signupcontroller.lastNameController,
                     labelText: 'Last Name', hintext: 'Last Name'),
                                     SizedBox(
                   height: size.height * 0.02,
                 ),
-                const CustomTextField(labelText: 'Email', hintext: 'Email'),
+                CustomTextField(
+                  obsecure: false,
+                   controller: signupcontroller.emailController,
+                  labelText: 'Email', hintext: 'Email'),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                const CustomTextField(
+                  CustomTextField(
+                    obsecure: true,
+                     controller: signupcontroller.passwordController,
                     labelText: 'Password', hintext: 'Password'),
                      SizedBox(
                   height: size.height * 0.02,
                 ),
-                const CustomTextField(
+                  CustomTextField( 
+                    obsecure: true,
+                     controller: signupcontroller.cPasswordController,
                     labelText: 'Confirm Password', hintext: 'Confirm Password'),
                        SizedBox(
                   height: size.height * 0.02,
                 ),
-                Image.asset(signupBtn)
+
+                signupcontroller.isSigningUp == true ?
+                const CircularProgressIndicator(
+                  color: Colors.red,
+                ):
+                GestureDetector(
+                  onTap: () {
+                    signupcontroller.checkAllFieldsAreFilled(context);
+                    setState(() {
+                      
+                    });
+                  },
+                  child: Image.asset(signupBtn))
               ],
             ),
           ),

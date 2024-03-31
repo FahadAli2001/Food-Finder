@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
+  final TextEditingController? controller;
   final String hintext;
   final String labelText;
-  const CustomTextField({super.key,required this.labelText,required this.hintext});
+  final bool? obsecure;
+  const CustomTextField({
+    super.key,required this.labelText,required this.hintext, this.controller,
+    this.obsecure
+    });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.sizeOf(context).height*0.06,
       child: TextField(
+        controller:controller ,
+        obscureText:obsecure!,
+        style:const TextStyle(color: Colors.white70),
         decoration: InputDecoration(
           hintText: hintext,
           hintStyle:const TextStyle(color: Colors.white70),

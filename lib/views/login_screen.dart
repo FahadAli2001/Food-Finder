@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
- import 'package:foodfinder/const/images.dart';
-import 'package:foodfinder/views/home_screen.dart';
+import 'package:foodfinder/const/images.dart';
+import 'package:foodfinder/controller/auth_controller/login_controller.dart';
 import 'package:foodfinder/views/signup_screen.dart';
 import 'package:foodfinder/widgets/custom_textfield.dart';
 
@@ -12,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  LoginController loginController = LoginController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -41,18 +42,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Image.asset(
                   logo,
-                 filterQuality: FilterQuality.high,
+                  filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
                 ),
                 SizedBox(
                   height: size.height * 0.09,
                 ),
-                const CustomTextField(labelText: 'Email', hintext: 'Email'),
+                CustomTextField(
+                    controller: loginController.emailController,
+                    obsecure: false,
+                    labelText: 'Email',
+                    hintext: 'Email'),
                 SizedBox(
                   height: size.height * 0.05,
                 ),
-                const CustomTextField(
-                    labelText: 'Password', hintext: 'Password'),
+                CustomTextField(
+                    controller: loginController.passwordController,
+                    obsecure: true,
+                    labelText: 'Password',
+                    hintext: 'Password'),
                 SizedBox(
                   height: size.height * 0.01,
                 ),
@@ -60,11 +68,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Checkbox(
-                      checkColor: Colors.red,  
-                      activeColor: Colors
-                          .white, 
-                      value: true,
-                      onChanged: (bool? value) {},
+                      checkColor: Colors.red,
+                      activeColor: Colors.white,
+                      value: loginController.rememberMe,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          loginController.rememberMe = value!;
+                        });
+                      },
                     ),
                     SizedBox(
                       width: size.width * 0.02,
@@ -78,14 +89,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
-                    },
-                    child: Image.asset(loginBtn)),
+                loginController.islogingIn == true
+                    ? const CircularProgressIndicator(
+                        color: Colors.red,
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          loginController.checkIsRememberMe(context);
+                          setState(() {
+                            
+                          });
+                        },
+                        child: Image.asset(loginBtn)),
                 SizedBox(
                   height: size.height * 0.02,
                 ),

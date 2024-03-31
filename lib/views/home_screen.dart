@@ -1,14 +1,15 @@
-import 'package:flutter/cupertino.dart';
+ 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:foodfinder/views/profile_screen.dart';
+import 'package:foodfinder/model/user_model.dart';
+ import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/upload_image_screen.dart';
 import 'package:foodfinder/widgets/custom_drawer.dart';
 
 import '../const/images.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final UserModel? userModel;
+  const HomeScreen({super.key,   this.userModel});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,6 +17,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    
+    super.initState();
+   
+  }
+
+   
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -41,20 +51,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()));
+                        builder: (context) =>  ProfileScreen(
+                          userModel: widget.userModel,
+                        )));
               },
-              child: const CircleAvatar(
-                radius: 15,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.person, color: Colors.black),
-              ),
+              child:   widget.userModel!.profileImage != null
+                      ? Container(
+                          width: 15,
+                          height: 15,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image:
+                                      NetworkImage(widget.userModel!.profileImage!))),
+                        )
+                      : const CircleAvatar(
+                          radius: 15,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                        ),
             ),
             const SizedBox(
               width: 15,
             )
           ],
         ),
-        drawer: const CustomDrawer(),
+        drawer:   CustomDrawer(
+          userModel: widget.userModel,
+          
+        ),
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: SingleChildScrollView(

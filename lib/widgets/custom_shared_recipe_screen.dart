@@ -52,23 +52,28 @@ class CustomSharedRecipeScreen extends StatelessWidget {
                   Text(
                       'Lorem ipsum dolor sit amet, \n consectetur adipiscing elit ...',
                       overflow: TextOverflow.ellipsis,
-                      
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: MediaQuery.of(context).size.height * 0.016,
                       )),
                 ],
               ),
-           const   Column(
+              const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.red,
-                    child: Icon(Icons.pin_drop,color: Colors.white,),
+                    child: Icon(
+                      Icons.pin_drop,
+                      color: Colors.white,
+                    ),
                   ),
-                   CircleAvatar(
+                  CircleAvatar(
                     backgroundColor: Colors.red,
-                    child: Icon(Icons.facebook,color: Colors.white,),
+                    child: Icon(
+                      Icons.facebook,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               )

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
+import 'package:foodfinder/controller/auth_controller/change_password_controller.dart';
 import 'package:foodfinder/widgets/custom_textfield.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -10,6 +13,7 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  ChangePasswordController changePasswordController = ChangePasswordController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -17,7 +21,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: Scaffold(
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(15),
-          child: Image.asset(changePasswordBtn),
+          child: GestureDetector(
+            onTap: () {
+              
+              changePasswordController.checkFields();
+              
+            },
+            child: Image.asset(changePasswordBtn)),
         ),
         backgroundColor: Colors.black,
         appBar: AppBar(
@@ -47,17 +57,23 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               SizedBox(
                 height: size.height * 0.05,
               ),
-              const CustomTextField(
+                CustomTextField(
+                  controller: changePasswordController.passController,
+                obsecure: true,
                   labelText: 'Current Password', hintext: 'Current Password'),
               SizedBox(
                 height: size.height * 0.05,
               ),
-              const CustomTextField(
+                CustomTextField(
+                controller: changePasswordController.newPassController,
+                obsecure: true,
                   labelText: 'New Password', hintext: 'New Password'),
               SizedBox(
                 height: size.height * 0.05,
               ),
-              const CustomTextField(
+                CustomTextField(
+                  controller: changePasswordController.cPassController,
+                obsecure: true,
                   labelText: 'Confirm Password', hintext: 'Confirm Password'),
             ],
           ),
