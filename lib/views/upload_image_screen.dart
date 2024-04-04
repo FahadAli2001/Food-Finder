@@ -21,7 +21,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
     setState(() {
       if (pickedFile != null) {
         uploadImageController.image = File(pickedFile.path);
-        uploadImageController.sendImageToAPI(context);
+         uploadImageController.sendImageToAPI(context);
       } else {
         log('No image selected.');
       }

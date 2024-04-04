@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/auth_controller/login_controller.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/home_screen.dart';
-import 'package:foodfinder/views/upload_image_screen.dart';
 import 'package:foodfinder/views/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
