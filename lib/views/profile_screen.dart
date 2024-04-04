@@ -73,8 +73,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.03,
               ),
-              widget.userModel!.profileImage != null
-                  ? Container(
+              widget.userModel!.profileImage == null
+                  ? const CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.black,
+                      ),
+                    )
+                  :Container(
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
@@ -82,15 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           image: DecorationImage(
                               image: NetworkImage(
                                   widget.userModel!.profileImage!))),
-                    )
-                  : const CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                    ),
+                    ) ,
               SizedBox(
                 height: size.height * 0.02,
               ),

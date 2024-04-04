@@ -43,13 +43,13 @@ class RecipeCard extends StatelessWidget {
               imageUrl.isNotEmpty
                   ? Image.network(
                       imageUrl,
-                      width: size.width * 0.4,
+                      width: size.width * 0.35,
                       height: MediaQuery.of(context).size.height,
                       fit: BoxFit.cover,
                     )
                   : Image.asset(
                       salan,
-                      width: size.width * 0.4,
+                      width: size.width * 0.35,
                       height: MediaQuery.of(context).size.height,
                       fit: BoxFit.cover,
                     ),
@@ -58,7 +58,7 @@ class RecipeCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: size.width * 0.4,
+                    width: size.width * 0.35,
                     child: Text(
                       name,
                       maxLines: 2,
@@ -86,7 +86,7 @@ class RecipeCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    width: size.width * 0.4,
+                    width: size.width * 0.35,
                     child: Text(
                       description,
                       maxLines: 3,

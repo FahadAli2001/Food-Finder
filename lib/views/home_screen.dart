@@ -56,8 +56,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               userModel: widget.userModel,
                             )));
               },
-              child: widget.userModel!.profileImage != null
-                  ? Container(
+              child: widget.userModel!.profileImage == null
+                  ?const CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.black,
+                      ),
+                    ) 
+                  : Container(
                       width: 15,
                       height: 15,
                       decoration: BoxDecoration(
@@ -66,14 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               image: NetworkImage(
                                   widget.userModel!.profileImage!))),
                     )
-                  : const CircleAvatar(
-                      radius: 15,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                    ),
             ),
             const SizedBox(
               width: 15,

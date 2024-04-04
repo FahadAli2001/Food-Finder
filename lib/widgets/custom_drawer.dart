@@ -9,6 +9,7 @@ import 'package:foodfinder/views/shared_recipe_screen.dart';
 
 import '../controller/auth_controller/login_controller.dart';
 
+// ignore: must_be_immutable
 class CustomDrawer extends StatelessWidget {
   UserModel? userModel;
 
@@ -98,7 +99,9 @@ class CustomDrawer extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ProfileScreen()));
+                          builder: (context) =>   ProfileScreen(
+                            userModel: userModel,
+                          )));
                 },
                 leading: const Icon(
                   Icons.person,
