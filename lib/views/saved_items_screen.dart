@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:foodfinder/widgets/custom_saved_items_container.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:flutter/material.dart';
+import 'package:foodfinder/views/detail_screen.dart';
+ import 'package:foodfinder/widgets/widget_recipe_card/widget_recipe_card.dart';
 
 class SavedItemsScreen extends StatefulWidget {
   const SavedItemsScreen({super.key});
@@ -37,17 +38,54 @@ class _SavedItemsScreenState extends State<SavedItemsScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(15),
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            children: [
-              for (var i = 0; i < 4; i++) ...[
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: CustomSavedItemsContainer(),
-                )
-              ]
-            ],
-          ),
+          child: Expanded(
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('favorites')
+                        .snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if(snapshot.hasData){
+                        return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            Map<String, dynamic> data =
+                                snapshot.data!.docs[index].data()
+                                    as Map<String, dynamic>;
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailScreen(
+                                      recipe: data,
+                                      recipeId: snapshot.data!.docs[index].id,
+                                    ),
+                                  ),
+                                );
+                               
+                              },
+                              child: RecipeCard(
+                                id: snapshot.data!.docs[index].id,
+                                name: data['title'],
+                                rating: data['rating'],
+                                reviewCount: data['reviewCount'],
+                                description: data['instructions'],
+                                imageUrl: data['imageUrl'],
+                                ingredients: data['ingredients'],
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      else {
+                        return const Text('No Data',style: TextStyle(color: Colors.white),);
+                      }
+                    }),
+              )
         ),
       ),
     );

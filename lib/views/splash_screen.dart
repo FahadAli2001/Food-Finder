@@ -20,41 +20,51 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // checkRoute(context);
-     Timer(const Duration(seconds: 5), () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WelcomeScreen(),
-              ),
-            );
-          });
+    checkRoute(context);
+    //  Timer(const Duration(seconds: 5), () {
+    //         Navigator.pushReplacement(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (context) => const WelcomeScreen(),
+    //           ),
+    //         );
+    //       });
   }
 
   void checkRoute(BuildContext context) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    bool rememberMe = sp.getBool('rememberMe')!;
+    bool? rememberMe = sp.getBool('rememberMe');
     log(rememberMe.toString());
-    String uid = sp.getString('uid')!;
+    String? uid = sp.getString('uid');
     try {
       if (rememberMe == true) {
-        UserModel? userModel = await loginController.fetchUserData(uid);
-        if (userModel != null) {
-          Timer(const Duration(seconds: 5), () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomeScreen(
-                  userModel: userModel,
+        if (uid != null) {
+          UserModel? userModel = await loginController.fetchUserData(uid);
+          if (userModel != null) {
+            Timer(const Duration(seconds: 5), () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    userModel: userModel,
+                  ),
                 ),
-              ),
-              (route) => false,
-            );
-          });
+                (route) => false,
+              );
+            });
+          } else {
+            Timer(const Duration(seconds:4), () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WelcomeScreen(),
+                ),
+              );
+            });
+          }
         } else {
-        
-
-          Timer(const Duration(seconds: 5), () {
+          // uid is null
+          Timer(const Duration(seconds: 4), () {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -64,8 +74,6 @@ class _SplashScreenState extends State<SplashScreen> {
           });
         }
       } else {
-     
-
         Timer(const Duration(seconds: 4), () {
           Navigator.pushReplacement(
             context,

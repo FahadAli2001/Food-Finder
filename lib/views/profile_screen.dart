@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(15),
           child: GestureDetector(
-            onTap:(){
+            onTap: () {
               loginController.signOut(context);
             },
             child: Container(
@@ -73,30 +73,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.03,
               ),
-               widget.userModel!.profileImage != null
-                      ? Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image:
-                                      NetworkImage(widget.userModel!.profileImage!))),
-                        )
-                      : const CircleAvatar(
-                          radius:50,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.black,
-                          ),
-                        ),
+              widget.userModel!.profileImage != null
+                  ? Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  widget.userModel!.profileImage!))),
+                    )
+                  : const CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.black,
+                      ),
+                    ),
               SizedBox(
                 height: size.height * 0.02,
               ),
               Text(
-               '${widget.userModel?.fname ?? ''} ${widget.userModel?.lname ?? 'Guest'}',
-
+                '${widget.userModel?.fname ?? ''} ${widget.userModel?.lname ?? 'Guest'}',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: size.height * 0.03,
@@ -168,9 +167,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>   EditProfileScreen(
-                            userModel :widget.userModel
-                          )));
+                          builder: (context) =>
+                              EditProfileScreen(userModel: widget.userModel)));
                 },
                 child: Container(
                   width: size.width,
