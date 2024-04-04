@@ -3,6 +3,7 @@ import 'package:foodfinder/const/icons.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/views/map_screen.dart';
 
+// ignore: must_be_immutable
 class DetailScreen extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   var apiData;

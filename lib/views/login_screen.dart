@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/auth_controller/login_controller.dart';
@@ -72,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       activeColor: Colors.white,
                       value: loginController.rememberMe,
                       onChanged: (bool? value) {
+                        log(loginController.rememberMe.toString());
                         setState(() {
                           loginController.rememberMe = value!;
                         });
