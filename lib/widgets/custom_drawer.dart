@@ -161,7 +161,7 @@ class CustomDrawer extends StatelessWidget {
                           builder: (context) => const ChangePasswordScreen()));
                 },
                 leading: const Icon(
-                  Icons.password,
+                  Icons.key,
                   color: Colors.white,
                   size: 30,
                 ),
@@ -188,7 +188,7 @@ class CustomDrawer extends StatelessWidget {
             const  Spacer(),
               Container(
                 width: size.width,
-                height: size.height * 0.06,
+                height: size.height * 0.05,
                 color: Colors.red,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +197,7 @@ class CustomDrawer extends StatelessWidget {
                      SizedBox(
                     width: size.width * 0.03,
                   ),
-                  Text('Log out',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300,fontSize: size.height * 0.02),),
+                  Text('Log out',style: TextStyle(color: Colors.white,fontSize: size.height * 0.02),),
                 
                   ],
                 ),

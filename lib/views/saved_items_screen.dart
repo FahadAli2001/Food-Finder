@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
  import 'package:flutter/material.dart';
 import 'package:foodfinder/views/detail_screen.dart';
- import 'package:foodfinder/widgets/widget_recipe_card/widget_recipe_card.dart';
+ import 'package:foodfinder/widgets/widget_recipe_card.dart';
 
 class SavedItemsScreen extends StatefulWidget {
   const SavedItemsScreen({super.key});

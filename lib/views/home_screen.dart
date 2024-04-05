@@ -5,7 +5,7 @@ import 'package:foodfinder/views/detail_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/upload_image_screen.dart';
 import 'package:foodfinder/widgets/custom_drawer.dart';
-import 'package:foodfinder/widgets/widget_recipe_card/widget_recipe_card.dart';
+import 'package:foodfinder/widgets/widget_recipe_card.dart';
 
 import '../const/images.dart';
 
