@@ -103,15 +103,49 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                      Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const UploadImageScreen()));
                 },
-                child: Image.asset(
-                  uploadbtn,
+                child: Container(
+                width: size.width,
+                height: size.height * 0.07,
+                color: const Color(0xffCA0000),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                   
+                    SizedBox(
+                      width: size.width * 0.03,
+                    ),
+                    Text(
+                      'Upload ',
+                      style: TextStyle(
+                        fontSize: size.height * 0.02,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                     const Icon(
+                      Icons.image,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
+                            ),
               ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => const UploadImageScreen()));
+              //   },
+              //   child: Image.asset(
+              //     uploadbtn,
+              //   ),
+              // ),
               SizedBox(
                 height: size.height * 0.03,
               ),
