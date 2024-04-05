@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:foodfinder/const/images.dart';
-import 'package:foodfinder/model/user_model.dart';
+ import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/change_password_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/saved_items_screen.dart';
@@ -34,8 +32,16 @@ class CustomDrawer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  userModel!.profileImage != null
-                      ? Container(
+                  userModel == null || userModel!.profileImage == null
+                      ? const CircleAvatar(
+                          radius: 35,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
+                        )
+                      : Container(
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
@@ -43,14 +49,6 @@ class CustomDrawer extends StatelessWidget {
                               image: DecorationImage(
                                   image:
                                       NetworkImage(userModel!.profileImage!))),
-                        )
-                      : const CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.black,
-                          ),
                         ),
                   SizedBox(
                     width: size.width * 0.05,
@@ -148,7 +146,7 @@ class CustomDrawer extends StatelessWidget {
                   size: 30,
                 ),
                 title: const Text(
-                  "Total Recipes Share",
+                  "Shared Recipes",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -174,18 +172,35 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
 
-              Expanded(
-                child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: GestureDetector(
-                      onTap: () {
-                        loginController.signOut(context);
-                      },
-                      child: Image.asset(
-                        logoutBtn,
-                        height: 70,
-                      ),
-                    )),
+              // Expanded(
+              //   child: Align(
+              //       alignment: Alignment.bottomLeft,
+              //       child: GestureDetector(
+              //         onTap: () {
+              //           loginController.signOut(context);
+              //         },
+              //         child: Image.asset(
+              //           logoutBtn,
+              //           height: 70,
+              //         ),
+              //       )),
+              // )
+            const  Spacer(),
+              Container(
+                width: size.width,
+                height: size.height * 0.06,
+                color: Colors.red,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const  Icon(Icons.logout,color: Colors.white,),
+                     SizedBox(
+                    width: size.width * 0.03,
+                  ),
+                  Text('Log out',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w300,fontSize: size.height * 0.02),),
+                
+                  ],
+                ),
               )
             ],
           ),

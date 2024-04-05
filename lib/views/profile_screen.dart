@@ -73,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.03,
               ),
-              widget.userModel!.profileImage == null
+              widget.userModel == null || widget.userModel!.profileImage == null
                   ? const CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
@@ -196,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(
-                height: size.height * 0.03,
+                height: size.height * 0.05,
               ),
               Align(
                 alignment: Alignment.topLeft,
@@ -204,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'Saved Items',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: size.height * 0.025,
+                      fontSize: size.height * 0.02,
                       fontWeight: FontWeight.w500),
                 ),
               ),
@@ -224,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'Shared Recipes',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: size.height * 0.025,
+                      fontSize: size.height * 0.02,
                       fontWeight: FontWeight.w500),
                 ),
               ),

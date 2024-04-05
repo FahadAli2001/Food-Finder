@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:foodfinder/const/icons.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/favorite_items_controller/favorite_items_controller.dart';
@@ -60,7 +59,12 @@ class _DetailScreenState extends State<DetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               widget.image == null
-                  ? Image.asset(salan)
+                  ? Image.network(
+                      widget.recipe!['imageUrl'],
+                      fit: BoxFit.fill,
+                      width: size.width,
+                      height: size.height * 0.3,
+                    )
                   : Image.file(
                       widget.image!,
                       fit: BoxFit.fill,

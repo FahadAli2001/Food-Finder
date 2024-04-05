@@ -54,25 +54,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 },
                 child: Image.asset(loginBtn)),
            
-            // Expanded(
-            //   child: Align(
-            //     alignment: Alignment.bottomRight,
-            //     child: GestureDetector(
-            //       onTap: () {
-            //         Navigator.push(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => const HomeScreen(
-            //                   userModel: null,
-            //                 )));
-            //       },
-            //       child: const Text(
-            //         "Skip -->",
-            //         style: TextStyle(color: Colors.white, fontSize: 16),
-            //       ),
-            //     ),
-            //   ),
-            // )
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen(
+                              userModel: null,
+                            )));
+                  },
+                  child: const Text(
+                    "Skip -->",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ),
+            )
           ]),
         ),
       ),

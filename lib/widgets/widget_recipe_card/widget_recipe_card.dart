@@ -45,7 +45,7 @@ class RecipeCard extends StatelessWidget {
                       imageUrl,
                       width: size.width * 0.35,
                       height: MediaQuery.of(context).size.height,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     )
                   : Image.asset(
                       salan,

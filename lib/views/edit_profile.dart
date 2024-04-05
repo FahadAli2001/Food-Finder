@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfinder/controller/edit_profile_controller/edit_profle_controller.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/widgets/custom_textfield.dart';
@@ -18,8 +19,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    editProfileController
-        .fetchUserDataAndAssignToControllers(widget.userModel!.uid!);
+    if (widget.userModel != null && widget.userModel!.uid != null) {
+      editProfileController
+          .fetchUserDataAndAssignToControllers(widget.userModel!.uid!);
+    }
   }
 
   EditProfileController editProfileController = EditProfileController();
@@ -49,9 +52,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {
-                        editProfileController.uploadUserDataAndImage(
-                            widget.userModel!.uid!, context);
-                        setState(() {});
+                        if (widget.userModel != null &&
+                            widget.userModel!.uid != null &&
+                            widget.userModel!.uid!.isNotEmpty &&
+                            context != null) {
+                          editProfileController.uploadUserDataAndImage(
+                              widget.userModel!.uid!, context);
+                          setState(() {});
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Please log in first !!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }
                       },
                       child: Container(
                         width: size.width,
@@ -101,17 +119,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: size.height * 0.15,
                           child: Stack(
                             children: [
-                              if (widget.userModel!.profileImage! != null)
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                          widget.userModel!.profileImage!),
-                                      fit: BoxFit.cover,
-                                    ),
+                              if (widget.userModel == null ||
+                                  widget.userModel!.profileImage == null)
+                                const CircleAvatar(
+                                  radius: 50,
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.black,
                                   ),
                                 ),
                               if (editProfileController.image != null)
@@ -127,13 +141,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                   ),
                                 ),
-                              if (editProfileController.image == null &&
-                                  widget.userModel!.profileImage! == null)
-                                const CircleAvatar(
-                                  radius: 50,
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Colors.black,
+                              if (widget.userModel != null &&
+                                  widget.userModel!.profileImage != null)
+                                Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          widget.userModel!.profileImage!),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               Positioned(

@@ -1,8 +1,6 @@
- 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
- import 'package:foodfinder/model/user_model.dart';
+import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/detail_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/upload_image_screen.dart';
@@ -56,24 +54,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               userModel: widget.userModel,
                             )));
               },
-              child: widget.userModel!.profileImage == null
-                  ?const CircleAvatar(
-                      radius: 15,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                    ) 
-                  : Container(
-                      width: 15,
-                      height: 15,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  widget.userModel!.profileImage!))),
-                    )
+              child: widget.userModel == null || widget.userModel!.profileImage == null
+      ?const CircleAvatar(
+          radius: 15,
+          backgroundColor: Colors.white,
+          child: Icon(
+            Icons.person,
+            color: Colors.black,
+          ),
+        ) 
+      : Container(
+          width: 15,
+          height: 15,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: NetworkImage(widget.userModel!.profileImage!),
+            ),
+          ),
+        ),
             ),
             const SizedBox(
               width: 15,
