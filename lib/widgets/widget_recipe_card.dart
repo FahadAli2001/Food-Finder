@@ -45,13 +45,13 @@ class RecipeCard extends StatelessWidget {
                       imageUrl,
                       width: size.width * 0.35,
                       height: MediaQuery.of(context).size.height,
-                      fit: BoxFit.fill,
+                      // fit: BoxFit.fill,
                     )
                   : Image.asset(
                       salan,
                       width: size.width * 0.35,
                       height: MediaQuery.of(context).size.height,
-                      fit: BoxFit.cover,
+                      // fit: BoxFit.cover,
                     ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

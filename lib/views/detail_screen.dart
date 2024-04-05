@@ -61,7 +61,8 @@ class _DetailScreenState extends State<DetailScreen> {
               widget.image == null
                   ? Image.network(
                       widget.recipe!['imageUrl'],
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
                       width: size.width,
                       height: size.height * 0.3,
                     )

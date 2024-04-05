@@ -54,25 +54,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               userModel: widget.userModel,
                             )));
               },
-              child: widget.userModel == null || widget.userModel!.profileImage == null
-      ?const CircleAvatar(
-          radius: 15,
-          backgroundColor: Colors.white,
-          child: Icon(
-            Icons.person,
-            color: Colors.black,
-          ),
-        ) 
-      : Container(
-          width: 15,
-          height: 15,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: NetworkImage(widget.userModel!.profileImage!),
-            ),
-          ),
-        ),
+              child: widget.userModel == null ||
+                      widget.userModel!.profileImage == null
+                  ? const CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.black,
+                      ),
+                    )
+                  : Container(
+                      width: 15,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: NetworkImage(widget.userModel!.profileImage!),
+                        ),
+                      ),
+                    ),
             ),
             const SizedBox(
               width: 15,
@@ -245,7 +246,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 );
-                               
                               },
                               child: RecipeCard(
                                 id: snapshot.data!.docs[index].id,
