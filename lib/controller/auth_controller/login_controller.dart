@@ -7,9 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/welcome_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+  import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginController {
+class LoginController extends ChangeNotifier{
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -18,11 +18,14 @@ class LoginController {
   UserModel? userModel;
 
   Future<void> loginUser(context) async {
+    
     String email = emailController.text;
     String password = passwordController.text;
-    
+
     SharedPreferences sp = await SharedPreferences.getInstance();
     try {
+    islogingIn =  true;
+    log(islogingIn.toString());
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -43,9 +46,13 @@ class LoginController {
         );
       }
 
-      islogingIn = false;
+      islogingIn =  false;
+      
     } catch (e) {
+      islogingIn =  false;
       log(e.toString());
+      log(islogingIn.toString());
+     
       Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
@@ -53,7 +60,9 @@ class LoginController {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-    }
+      
+    } 
+     notifyListeners();
   }
 
   Future<UserModel?> fetchUserData(String userId) async {
@@ -64,10 +73,9 @@ class LoginController {
           .get();
       UserModel userModel =
           UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
-          log(userModel.email!);
+      log(userModel.email!);
       return userModel;
     } catch (e) {
-      
       Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
@@ -79,8 +87,8 @@ class LoginController {
     return userModel;
   }
 
-  void checkIsRememberMe(context) async {
-    islogingIn = true;
+  Future<void> checkIsRememberMe(context) async {
+  
     if (rememberMe == true) {
       savedUserLogin(context);
     } else {

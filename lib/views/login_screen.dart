@@ -1,10 +1,10 @@
-import 'dart:developer';
-
+ 
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/auth_controller/login_controller.dart';
 import 'package:foodfinder/views/signup_screen.dart';
 import 'package:foodfinder/widgets/custom_textfield.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,10 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginController loginController = LoginController();
+ 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+     final loginController = Provider.of<LoginController>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -74,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       activeColor: Colors.white,
                       value: loginController.rememberMe,
                       onChanged: (bool? value) {
-                        log(loginController.rememberMe.toString());
+                        // log(loginController.rememberMe.toString());
                         setState(() {
                           loginController.rememberMe = value!;
                         });
@@ -92,18 +93,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                loginController.islogingIn == true
-                    ? const CircularProgressIndicator(
-                        color: Colors.red,
-                      )
-                    : GestureDetector(
+                loginController.islogingIn == false
+                    ? GestureDetector(
                         onTap: () {
-                          loginController.checkIsRememberMe(context);
+                           loginController.checkIsRememberMe(context);
                           setState(() {
-                            
+                           
                           });
                         },
-                        child: Image.asset(loginBtn)),
+                        child: Image.asset(loginBtn)) 
+                    :const CircularProgressIndicator(
+                        color: Colors.red,
+                      ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),

@@ -34,7 +34,6 @@ class FavoriteItemsController {
       });
     } catch (e) {
       log('Error marking favorite: $e');
-      throw e;
-    }
+     }
   }
 }

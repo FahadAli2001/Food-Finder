@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:foodfinder/const/images.dart';
+import 'package:provider/provider.dart';
 
 import '../controller/auth_controller/signup_controller.dart';
 import '../widgets/custom_textfield.dart';
@@ -14,11 +14,11 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
 
-  SignupController signupcontroller = SignupController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-
+    final signupcontroller =  Provider.of<SignupController>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -94,6 +94,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 ):
                 GestureDetector(
                   onTap: () {
+                    setState(() {
+                      signupcontroller.isSigningUp = true;
+                    });
                     signupcontroller.checkAllFieldsAreFilled(context);
                     setState(() {
                       

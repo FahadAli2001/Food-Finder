@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
@@ -25,6 +24,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             onTap: () {
               
               changePasswordController.checkFields();
+              setState(() {
+                
+              });
               
             },
             child: Image.asset(changePasswordBtn)),

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfinder/views/login_screen.dart';
-
-class SignupController {
+ 
+class SignupController extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -17,11 +17,13 @@ class SignupController {
   bool isSigningUp = false;
 
   void checkAllFieldsAreFilled(context) {
+     
     if (firstNameController.text == ' ' ||
         lastNameController.text == ' ' ||
         emailController.text == ' ' ||
         passwordController.text == ' ' ||
         cPasswordController.text == ' ' ) {
+          isSigningUp = false;
       Fluttertoast.showToast(
         msg: "Please fill all the fields",
         toastLength: Toast.LENGTH_SHORT,
@@ -31,8 +33,9 @@ class SignupController {
       );
     } else {
       checkIsPassCorrect(context);
-      isSigningUp = true;
+     
     }
+    notifyListeners();
   }
 
   void checkIsPassCorrect(context) {
@@ -40,7 +43,9 @@ class SignupController {
     String cPass = cPasswordController.text;
     if (pass == cPass) {
        signUp(context);
+        
     } else {
+      isSigningUp = false;
       Fluttertoast.showToast(
         msg: "Password & Confirm Password Don't Match",
         toastLength: Toast.LENGTH_SHORT,
@@ -49,6 +54,7 @@ class SignupController {
         textColor: Colors.white,
       );
     }
+    notifyListeners();
   }
 
   Future<void> signUp(context) async {
@@ -63,6 +69,7 @@ class SignupController {
 
       saveUserData(context, uid);
     } catch (e) {
+      isSigningUp = false;
       log(e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
@@ -72,6 +79,7 @@ class SignupController {
           textColor: Colors.white,
           fontSize: 16.0);
     }
+    notifyListeners();
   }
 
   Future<void> saveUserData(context, String uid) async {
@@ -104,6 +112,7 @@ class SignupController {
           fontSize: 16.0);
     } catch (e) {
       log(e.toString());
+      isSigningUp = false;
       Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
@@ -112,5 +121,7 @@ class SignupController {
           textColor: Colors.white,
           fontSize: 16.0);
     }
+    notifyListeners();
   }
+  
 }

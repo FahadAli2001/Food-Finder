@@ -60,6 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               widget.userModel!.uid!, context);
                           setState(() {});
                         } else {
+                          
                           Fluttertoast.showToast(
                             msg: "Please log in first !!",
                             toastLength: Toast.LENGTH_SHORT,

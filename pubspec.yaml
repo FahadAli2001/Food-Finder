@@ -43,6 +43,7 @@ dependencies:
   fluttertoast:  
   firebase_storage:  
   shared_preferences:  
+  provider: ^6.1.2  
 
 dev_dependencies:
   flutter_test:

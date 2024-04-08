@@ -1,13 +1,11 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+ import 'package:flutter/material.dart';
+ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfinder/model/user_model.dart';
 
-class ChangePasswordController {
+class ChangePasswordController extends ChangeNotifier {
   TextEditingController passController = TextEditingController();
   TextEditingController newPassController = TextEditingController();
   TextEditingController cPassController = TextEditingController();

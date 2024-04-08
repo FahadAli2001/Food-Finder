@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/home_screen.dart';
 
-class EditProfileController {
+class EditProfileController with ChangeNotifier {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -60,7 +60,7 @@ Future<void> uploadUserDataAndImage(String uid, context) async {
 
     await usersCollection.doc(uid).set(userData).then((value) {
       clearFields();
-      isUpdating = false;
+    
 
       Navigator.pushAndRemoveUntil(
         context,
@@ -71,6 +71,7 @@ Future<void> uploadUserDataAndImage(String uid, context) async {
         ),
         (route) => false,
       );
+        isUpdating = false;
       Fluttertoast.showToast(
         msg: 'User Data Updated',
         toastLength: Toast.LENGTH_SHORT,
@@ -82,6 +83,7 @@ Future<void> uploadUserDataAndImage(String uid, context) async {
     });
   } catch (e) {
     log('Error uploading user data and image: $e');
+    isUpdating = false;
     Fluttertoast.showToast(
       msg: e.toString(),
       toastLength: Toast.LENGTH_SHORT,
@@ -91,6 +93,7 @@ Future<void> uploadUserDataAndImage(String uid, context) async {
       fontSize: 16.0,
     );
   }
+  notifyListeners();
 }
 
 
