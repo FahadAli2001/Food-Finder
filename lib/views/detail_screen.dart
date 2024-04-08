@@ -56,7 +56,7 @@ class _DetailScreenState extends State<DetailScreen> {
               color: const Color(0xffCA0000),
               child: Center(
                 child: Text(
-                  'Where you will find this',
+                  'Locate',
                   style: TextStyle(
                     fontSize: size.height * 0.02,
                     color: Colors.white,

@@ -1,7 +1,8 @@
- 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/auth_controller/login_controller.dart';
+import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/signup_screen.dart';
 import 'package:foodfinder/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
@@ -14,11 +15,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
- 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-     final loginController = Provider.of<LoginController>(context);
+    final loginController = Provider.of<LoginController>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -27,21 +27,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                //         ))),
                 SizedBox(
-                  height: size.height * 0.02,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Align(
-                        alignment: Alignment.topLeft,
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ))),
-                SizedBox(
-                  height: size.height * 0.06,
+                  height: size.height * 0.09,
                 ),
                 Image.asset(
                   logo,
@@ -93,16 +81,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
+
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomeScreen(userModel: null),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  child: const Text(
+                    "Continue As Guest",
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.05,
+                ),
                 loginController.islogingIn == false
                     ? GestureDetector(
                         onTap: () {
-                           loginController.checkIsRememberMe(context);
-                          setState(() {
-                           
-                          });
+                          loginController.checkIsRememberMe(context);
+                          setState(() {});
                         },
-                        child: Image.asset(loginBtn)) 
-                    :const CircularProgressIndicator(
+                        child: Image.asset(loginBtn))
+                    : const CircularProgressIndicator(
                         color: Colors.red,
                       ),
                 SizedBox(
@@ -119,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Don't have an account ? Create a new one",
                     style: TextStyle(color: Colors.white),
                   ),
-                )
+                ),
               ],
             ),
           ),

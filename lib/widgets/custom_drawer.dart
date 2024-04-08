@@ -6,6 +6,7 @@ import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/saved_items_screen.dart';
 import 'package:foodfinder/views/shared_recipe_screen.dart';
+import 'package:foodfinder/views/signup_screen.dart';
 
 import '../controller/auth_controller/login_controller.dart';
 
@@ -66,12 +67,14 @@ class CustomDrawer extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                    _auth.currentUser != null ?  const Text(
-                        "Food Lover",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ):Container()
+                      _auth.currentUser != null
+                          ? const Text(
+                              "Food Lover",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container()
                     ],
                   )
                 ],
@@ -81,18 +84,21 @@ class CustomDrawer extends StatelessWidget {
                 height: size.height * 0.05,
               ),
               //
-                ListTile(
+              ListTile(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeScreen(
-                    userModel: null,
-                  )));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen(
+                                userModel: null,
+                              )));
                 },
-                leading:const Icon(
+                leading: const Icon(
                   Icons.home,
                   color: Colors.white,
                   size: 30,
                 ),
-                title:const Text(
+                title: const Text(
                   "Home",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
@@ -100,109 +106,142 @@ class CustomDrawer extends StatelessWidget {
               ),
               //
 
-            _auth.currentUser != null ?  ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProfileScreen(
-                                userModel: userModel,
-                              )));
-                },
-                leading: const Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                title: const Text(
-                  "Profile",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ):Container(),
+              _auth.currentUser != null
+                  ? ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileScreen(
+                                      userModel: userModel,
+                                    )));
+                      },
+                      leading: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      title: const Text(
+                        "Profile",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  : Container(),
               //
 
-            _auth.currentUser != null ?  ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SavedItemsScreen()));
-                },
-                leading: const Icon(
-                  Icons.laptop,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                title: const Text(
-                  "Saved Recipes",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ):Container(),
+              _auth.currentUser != null
+                  ? ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const SavedItemsScreen()));
+                      },
+                      leading: const Icon(
+                        Icons.laptop,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      title: const Text(
+                        "Saved Recipes",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  : Container(),
 
-             _auth.currentUser != null ?  ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SharedRecipeScreen()));
-                },
-                leading: const Icon(
-                  Icons.share,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                title: const Text(
-                  "Shared Recipes",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ):Container(),
+              _auth.currentUser != null
+                  ? ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const SharedRecipeScreen()));
+                      },
+                      leading: const Icon(
+                        Icons.share,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      title: const Text(
+                        "Shared Recipes",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  : Container(),
               //
 
-            _auth.currentUser != null ?  ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ChangePasswordScreen()));
-                },
-                leading: const Icon(
-                  Icons.key,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                title: const Text(
-                  "Change Passowrd",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ):Container(),
+              _auth.currentUser != null
+                  ? ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ChangePasswordScreen()));
+                      },
+                      leading: const Icon(
+                        Icons.key,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      title: const Text(
+                        "Change Passowrd",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  : Container(),
 
               const Spacer(),
-             _auth.currentUser != null ? Container(
-                width: size.width,
-                height: size.height * 0.05,
-                color: Colors.red,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: size.width * 0.03,
-                    ),
-                    Text(
-                      'Log out',
-                      style: TextStyle(
-                          color: Colors.white, fontSize: size.height * 0.02),
-                    ),
-                  ],
-                )
-              ):Container()
+              _auth.currentUser != null
+                  ? Container(
+                      width: size.width,
+                      height: size.height * 0.05,
+                      color: Colors.red,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: size.width * 0.03,
+                          ),
+                          Text(
+                            'Log out',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size.height * 0.02),
+                          ),
+                        ],
+                      ))
+                  : Container(
+                      width: size.width,
+                      height: size.height * 0.05,
+                      color: Colors.red,
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SignupScreen()));
+                          },
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size.height * 0.02),
+                          ),
+                        ),
+                      ))
             ],
           ),
         ),

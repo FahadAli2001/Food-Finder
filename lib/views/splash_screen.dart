@@ -5,6 +5,7 @@ import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/auth_controller/login_controller.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/home_screen.dart';
+import 'package:foodfinder/views/login_screen.dart';
 import 'package:foodfinder/views/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const WelcomeScreen(),
+                  builder: (context) => const LoginScreen(),
                 ),
               );
             });
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const WelcomeScreen(),
+                builder: (context) => const LoginScreen(),
               ),
             );
           });
@@ -78,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const WelcomeScreen(),
+              builder: (context) => const LoginScreen(),
             ),
           );
         });
