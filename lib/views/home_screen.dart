@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/detail_screen.dart';
@@ -20,11 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -45,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Image.asset(logo),
           centerTitle: true,
           actions: [
-            GestureDetector(
+          _auth.currentUser != null ?  GestureDetector(
               onTap: () {
                 Navigator.push(
                     context,
@@ -74,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-            ),
+            ):Container(),
             const SizedBox(
               width: 15,
             )
@@ -232,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Just For You',
+                    'Recommended',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

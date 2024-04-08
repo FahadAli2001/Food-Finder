@@ -50,7 +50,20 @@ class _DetailScreenState extends State<DetailScreen> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MapScreen()));
               },
-              child: Image.asset(saveRecipeBtn)),
+              child: Container(
+              width: size.width,
+              height: size.height * 0.065,
+              color: const Color(0xffCA0000),
+              child: Center(
+                child: Text(
+                  'Where you will find this',
+                  style: TextStyle(
+                    fontSize: size.height * 0.02,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -161,7 +174,8 @@ class _DetailScreenState extends State<DetailScreen> {
               const SizedBox(height: 10),
               widget.apiData != null
                   ? Text(
-                      widget.apiData["recipe_details"][0]['ingredients'],
+                     // ignore: prefer_interpolation_to_compose_strings
+                     '• '+ widget.apiData["recipe_details"][0]['ingredients'],
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15.5,
@@ -173,7 +187,8 @@ class _DetailScreenState extends State<DetailScreen> {
                       itemCount: widget.recipe['ingredients'].length,
                       itemBuilder: (context, index) {
                         return Text(
-                          widget.recipe?['ingredients'][index] ?? '',
+                          // ignore: prefer_interpolation_to_compose_strings
+                          '• '+ widget.recipe?['ingredients'][index] ?? '',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15.5,

@@ -36,7 +36,7 @@ class RecipeCard extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         color: Colors.black,
         child: Padding(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -51,7 +51,7 @@ class RecipeCard extends StatelessWidget {
                       salan,
                       width: size.width * 0.35,
                       height: MediaQuery.of(context).size.height,
-                      // fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

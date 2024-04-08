@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
- import 'package:foodfinder/model/user_model.dart';
+import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/change_password_screen.dart';
+import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/saved_items_screen.dart';
 import 'package:foodfinder/views/shared_recipe_screen.dart';
@@ -13,6 +15,7 @@ class CustomDrawer extends StatelessWidget {
 
   CustomDrawer({super.key, this.userModel});
   LoginController loginController = LoginController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +66,12 @@ class CustomDrawer extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                      const Text(
+                    _auth.currentUser != null ?  const Text(
                         "Food Lover",
                         style: TextStyle(
                           color: Colors.white,
                         ),
-                      ),
+                      ):Container()
                     ],
                   )
                 ],
@@ -78,13 +81,18 @@ class CustomDrawer extends StatelessWidget {
                 height: size.height * 0.05,
               ),
               //
-              const ListTile(
-                leading: Icon(
+                ListTile(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeScreen(
+                    userModel: null,
+                  )));
+                },
+                leading:const Icon(
                   Icons.home,
                   color: Colors.white,
                   size: 30,
                 ),
-                title: Text(
+                title:const Text(
                   "Home",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
@@ -92,14 +100,14 @@ class CustomDrawer extends StatelessWidget {
               ),
               //
 
-              ListTile(
+            _auth.currentUser != null ?  ListTile(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>   ProfileScreen(
-                            userModel: userModel,
-                          )));
+                          builder: (context) => ProfileScreen(
+                                userModel: userModel,
+                              )));
                 },
                 leading: const Icon(
                   Icons.person,
@@ -111,10 +119,10 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
+              ):Container(),
               //
 
-              ListTile(
+            _auth.currentUser != null ?  ListTile(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -131,9 +139,9 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
+              ):Container(),
 
-              ListTile(
+             _auth.currentUser != null ?  ListTile(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -150,10 +158,10 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
+              ):Container(),
               //
 
-              ListTile(
+            _auth.currentUser != null ?  ListTile(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -170,38 +178,31 @@ class CustomDrawer extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-              ),
+              ):Container(),
 
-              // Expanded(
-              //   child: Align(
-              //       alignment: Alignment.bottomLeft,
-              //       child: GestureDetector(
-              //         onTap: () {
-              //           loginController.signOut(context);
-              //         },
-              //         child: Image.asset(
-              //           logoutBtn,
-              //           height: 70,
-              //         ),
-              //       )),
-              // )
-            const  Spacer(),
-              Container(
+              const Spacer(),
+             _auth.currentUser != null ? Container(
                 width: size.width,
                 height: size.height * 0.05,
                 color: Colors.red,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const  Icon(Icons.logout,color: Colors.white,),
-                     SizedBox(
-                    width: size.width * 0.03,
-                  ),
-                  Text('Log out',style: TextStyle(color: Colors.white,fontSize: size.height * 0.02),),
-                
+                    const Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: size.width * 0.03,
+                    ),
+                    Text(
+                      'Log out',
+                      style: TextStyle(
+                          color: Colors.white, fontSize: size.height * 0.02),
+                    ),
                   ],
-                ),
-              )
+                )
+              ):Container()
             ],
           ),
         ),

@@ -104,7 +104,9 @@ class _SplashScreenState extends State<SplashScreen> {
             height: size.height,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(splashBurger), fit: BoxFit.fill)),
+                    image: AssetImage(splashBurger), 
+                    fit: BoxFit.fill
+                    )),
           ),
 
           Container(
@@ -112,15 +114,15 @@ class _SplashScreenState extends State<SplashScreen> {
             height: size.height,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(blackBg), fit: BoxFit.fill)),
+                    image: AssetImage(blackBg), 
+                    fit: BoxFit.fill
+                    )),
           ),
           Positioned(
             top: size.height * 0.6,
-            left: 10,
-            right: 10,
-            child: Column(
-              children: [Image.asset(welcomeText)],
-            ),
+            left: size.width*0.04,
+            right: size.width*0.04,
+            child: Image.asset(welcomeText),
           ),
           // Positioned(
           //   top: size.height * 0.84,
