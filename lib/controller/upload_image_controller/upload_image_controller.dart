@@ -19,7 +19,7 @@ class UploadImageController {
 
   Future<void> sendImageToAPI(context) async {
     log("send image $image");
-    var uri = Uri.parse('https://m966bfcp-5000.asse.devtunnels.ms/predict');
+    var uri = Uri.parse('https://377084gf-5000.inc1.devtunnels.ms/predict');
     var request = http.MultipartRequest('POST', uri);
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
     try {
