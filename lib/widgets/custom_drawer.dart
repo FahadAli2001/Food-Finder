@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/change_password_screen.dart';
 import 'package:foodfinder/views/home_screen.dart';
+import 'package:foodfinder/views/login_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/saved_items_screen.dart';
 import 'package:foodfinder/views/shared_recipe_screen.dart';
@@ -232,10 +233,10 @@ class CustomDrawer extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const SignupScreen()));
+                                        const LoginScreen()));
                           },
                           child: Text(
-                            'Register',
+                            'Login',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: size.height * 0.02),

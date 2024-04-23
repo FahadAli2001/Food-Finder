@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icons.menu,
                 color: Colors.white,
               )),
-          title: Image.asset(logo),
+          title: Image.asset(logo,width: size.width*0.3,),
           centerTitle: true,
           actions: [
           _auth.currentUser != null ?  GestureDetector(

@@ -37,7 +37,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        title: Image.asset(logo),
+        title: Image.asset(logo,width: size.width*0.3,),
         centerTitle: true,
       ),
       body: Padding(
