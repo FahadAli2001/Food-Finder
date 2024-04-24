@@ -1,5 +1,6 @@
  
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/favorite_items_controller/favorite_items_controller.dart';
@@ -25,6 +26,8 @@ class RecipeCard extends StatelessWidget {
       this.ingredients});
 
   FavoriteItemsController favoriteItemsController = FavoriteItemsController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +102,7 @@ class RecipeCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Align(
+           _auth.currentUser != null?   Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
                     onTap: () {
@@ -134,7 +137,7 @@ class RecipeCard extends StatelessWidget {
                         );
                       },
                     )),
-              ),
+              ):Container()
             ],
           ),
         ),

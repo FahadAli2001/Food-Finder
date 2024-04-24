@@ -269,7 +269,7 @@ class CustomDrawer extends StatelessWidget {
                                             const SignupScreen()));
                               },
                               child: Text(
-                                'SignUp',
+                                'Register',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: size.height * 0.02),

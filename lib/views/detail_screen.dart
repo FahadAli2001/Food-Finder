@@ -258,7 +258,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Container(
                         height: size.height * 0.06,
                         decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xffCA0000))),
+                           color:const Color(0xffCA0000) ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -267,12 +267,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               style: TextStyle(
                                 fontSize: size.height * 0.02,
                                 fontWeight: FontWeight.bold,
-                                color: const Color(0xffCA0000),
+                                color: Colors.white,
                               ),
                             ),
                             const Icon(
                               Icons.thumb_up,
-                              color: Color(0xffCA0000),
+                              color: Colors.white,
                             ),
                           ],
                         ),
@@ -315,7 +315,8 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Container(
                         height: size.height * 0.06,
                         decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xffCA0000))),
+                          color: Colors.grey.shade700,
+                            ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -324,12 +325,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               style: TextStyle(
                                 fontSize: size.height * 0.02,
                                 fontWeight: FontWeight.bold,
-                                color: const Color(0xffCA0000),
+                                color:   Colors.white,
                               ),
                             ),
                             const Icon(
                               Icons.thumb_down,
-                              color: Color(0xffCA0000),
+                              color: Colors.white,
                             ),
                           ],
                         ),
