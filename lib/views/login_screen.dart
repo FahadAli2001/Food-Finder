@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/auth_controller/login_controller.dart';
 import 'package:foodfinder/views/home_screen.dart';
@@ -59,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Checkbox(
-                      checkColor: Colors.red,
+                      checkColor: const Color(0xffCA0000),
                       activeColor: Colors.white,
                       value: loginController.rememberMe,
                       onChanged: (bool? value) {
@@ -74,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const Text(
                       "Remember Me",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: Color(0xffCA0000)),
                     )
                   ],
                 ),
@@ -92,16 +91,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       (route) => false,
                     );
                   },
-                  child: const Text(
-                    "Continue As Guest",
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.06,
+                    color: const Color(0xffCA0000),
+                    child: Center(
+                      child: Text(
+                        'Continue As Guest ',
+                        style: TextStyle(
+                          fontSize: size.height * 0.02,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
-                  height: size.height * 0.05,
+                  height: size.height * 0.02,
                 ),
                 loginController.islogingIn == false
                     ? GestureDetector(
@@ -109,9 +116,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           loginController.checkIsRememberMe(context);
                           setState(() {});
                         },
-                        child: Image.asset(loginBtn))
+                        child: Container(
+                    width: size.width,
+                    height: size.height * 0.06,
+                    color: const Color(0xffCA0000),
+                    child: Center(
+                      child: Text(
+                        'Sign In ',
+                        style: TextStyle(
+                          fontSize: size.height * 0.02,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),)
                     : const CircularProgressIndicator(
-                        color: Colors.red,
+                        color: Color(0xffCA0000),
                       ),
                 SizedBox(
                   height: size.height * 0.02,

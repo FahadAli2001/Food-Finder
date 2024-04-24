@@ -35,9 +35,17 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              )),
         backgroundColor: Colors.black,
         elevation: 0,
-        title: Image.asset(logo,width: size.width*0.3,),
+        title: Image.asset(logo,width: size.width*0.5,),
         centerTitle: true,
       ),
       body: Padding(

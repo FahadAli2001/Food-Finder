@@ -40,7 +40,7 @@ class _DetailScreenState extends State<DetailScreen> {
               )),
           backgroundColor: Colors.black,
           elevation: 0,
-          title: Image.asset(logo),
+          title: Image.asset(logo,width: size.width*0.5,),
           centerTitle: true,
         ),
         bottomNavigationBar: Padding(
@@ -101,6 +101,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   SizedBox(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -154,9 +155,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             },
                           ),
                         ),
-                        const SizedBox(width: 15),
-                        Image.asset(linkIcon),
-                        const SizedBox(width: 15),
+                       
                       ],
                     ),
                   ),
@@ -188,7 +187,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       itemBuilder: (context, index) {
                         return Text(
                           // ignore: prefer_interpolation_to_compose_strings
-                          '• '+ widget.recipe?['ingredients'][index] ?? '',
+                          '• '+ widget.recipe?['ingredients'][index]  ,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15.5,

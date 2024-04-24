@@ -6,8 +6,7 @@ import 'package:foodfinder/controller/auth_controller/login_controller.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/login_screen.dart';
-import 'package:foodfinder/views/welcome_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+ import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -42,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (uid != null) {
           UserModel? userModel = await loginController.fetchUserData(uid);
           if (userModel != null) {
-            Timer(const Duration(seconds: 5), () {
+            Timer(const Duration(seconds: 2), () {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
@@ -54,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
               );
             });
           } else {
-            Timer(const Duration(seconds:4), () {
+            Timer(const Duration(seconds:2), () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -65,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
           }
         } else {
           // uid is null
-          Timer(const Duration(seconds: 4), () {
+          Timer(const Duration(seconds: 2), () {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -75,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
           });
         }
       } else {
-        Timer(const Duration(seconds: 4), () {
+        Timer(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

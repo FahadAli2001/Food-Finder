@@ -153,27 +153,27 @@ class CustomDrawer extends StatelessWidget {
                     )
                   : Container(),
 
-              _auth.currentUser != null
-                  ? ListTile(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const SharedRecipeScreen()));
-                      },
-                      leading: const Icon(
-                        Icons.share,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      title: const Text(
-                        "Shared Recipes",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  : Container(),
+              // _auth.currentUser != null
+              //     ? ListTile(
+              //         onTap: () {
+              //           Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) =>
+              //                       const SharedRecipeScreen()));
+              //         },
+              //         leading: const Icon(
+              //           Icons.share,
+              //           color: Colors.white,
+              //           size: 30,
+              //         ),
+              //         title: const Text(
+              //           "Shared Recipes",
+              //           style: TextStyle(
+              //               color: Colors.white, fontWeight: FontWeight.bold),
+              //         ),
+              //       )
+              //     : Container(),
               //
 
               _auth.currentUser != null
@@ -200,49 +200,85 @@ class CustomDrawer extends StatelessWidget {
 
               const Spacer(),
               _auth.currentUser != null
-                  ? Container(
-                      width: size.width,
-                      height: size.height * 0.05,
-                      color: Colors.red,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.logout,
-                            color: Colors.white,
-                          ),
+                  ? GestureDetector(
+                    onTap: () {
+                      _auth.signOut().then((value) {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const 
+                        LoginScreen()), (route) => false);
+                      });
+                    },
+                    child: Container(
+                        width: size.width,
+                        height: size.height * 0.05,
+                        color:const Color(0xffCA0000),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.logout,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: size.width * 0.03,
+                            ),
+                            Text(
+                              'Log out',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size.height * 0.02),
+                            ),
+                          ],
+                        )),
+                  )
+                  : Column(
+                    children: [
+                      Container(
+                          width: size.width,
+                          height: size.height * 0.05,
+                          color:const Color(0xffCA0000),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen()));
+                              },
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: size.height * 0.02),
+                              ),
+                            ),
+                          )),
                           SizedBox(
-                            width: size.width * 0.03,
+                            height: size.height * 0.02,
                           ),
-                          Text(
-                            'Log out',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: size.height * 0.02),
-                          ),
-                        ],
-                      ))
-                  : Container(
-                      width: size.width,
-                      height: size.height * 0.05,
-                      color: Colors.red,
-                      child: Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const LoginScreen()));
-                          },
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: size.height * 0.02),
-                          ),
-                        ),
-                      ))
+                           Container(
+                          width: size.width,
+                          height: size.height * 0.05,
+                          color:const Color(0xffCA0000),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignupScreen()));
+                              },
+                              child: Text(
+                                'SignUp',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: size.height * 0.02),
+                              ),
+                            ),
+                          )),
+                    ],
+                  )
             ],
           ),
         ),
