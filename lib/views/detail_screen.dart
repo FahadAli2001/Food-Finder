@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:foodfinder/const/icons.dart';
-import 'package:foodfinder/const/images.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+ import 'package:flutter/material.dart';
+ import 'package:fluttertoast/fluttertoast.dart';
+ import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/favorite_items_controller/favorite_items_controller.dart';
 import 'package:foodfinder/views/map_screen.dart';
 
@@ -23,6 +24,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   FavoriteItemsController favoriteItemsController = FavoriteItemsController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +42,20 @@ class _DetailScreenState extends State<DetailScreen> {
               )),
           backgroundColor: Colors.black,
           elevation: 0,
-          title: Image.asset(logo,width: size.width*0.5,),
+          title: Image.asset(
+            logo,
+            width: size.width * 0.5,
+          ),
           centerTitle: true,
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(15),
           child: GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MapScreen()));
-              },
-              child: Container(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MapScreen()));
+            },
+            child: Container(
               width: size.width,
               height: size.height * 0.065,
               color: const Color(0xffCA0000),
@@ -63,7 +68,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ),
               ),
-            ),),
+            ),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -155,7 +161,6 @@ class _DetailScreenState extends State<DetailScreen> {
                             },
                           ),
                         ),
-                       
                       ],
                     ),
                   ),
@@ -173,8 +178,8 @@ class _DetailScreenState extends State<DetailScreen> {
               const SizedBox(height: 10),
               widget.apiData != null
                   ? Text(
-                     // ignore: prefer_interpolation_to_compose_strings
-                     '• '+ widget.apiData["recipe_details"][0]['ingredients'],
+                      // ignore: prefer_interpolation_to_compose_strings
+                      '• ' + widget.apiData["recipe_details"][0]['ingredients'],
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15.5,
@@ -187,7 +192,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       itemBuilder: (context, index) {
                         return Text(
                           // ignore: prefer_interpolation_to_compose_strings
-                          '• '+ widget.recipe?['ingredients'][index]  ,
+                          '• ' + widget.recipe?['ingredients'][index],
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15.5,
@@ -215,6 +220,124 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
               const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_auth.currentUser == null) {
+                        Fluttertoast.showToast(
+                          msg: "Login First",
+                          toastLength: Toast
+                              .LENGTH_LONG,  
+                          gravity: ToastGravity
+                              .BOTTOM,  
+                          
+                          backgroundColor:const Color(0xffCA0000)  , 
+                          textColor:
+                              Colors.white,  
+                          fontSize: 16.0,  
+                        );
+                      } else {
+                         Fluttertoast.showToast(
+                          msg: "Thank For Review",
+                          toastLength: Toast
+                              .LENGTH_LONG,  
+                          gravity: ToastGravity
+                              .BOTTOM,  
+                          
+                          backgroundColor:  Colors.green  , 
+                          textColor:
+                              Colors.white,  
+                          fontSize: 16.0,  
+                        );
+                      }
+                      },
+                      child: Container(
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xffCA0000))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Useful ',
+                              style: TextStyle(
+                                fontSize: size.height * 0.02,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xffCA0000),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.thumb_up,
+                              color: Color(0xffCA0000),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  //
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                         if (_auth.currentUser == null) {
+                        Fluttertoast.showToast(
+                          msg: "Login First",
+                          toastLength: Toast
+                              .LENGTH_LONG,  
+                          gravity: ToastGravity
+                              .BOTTOM,  
+                          
+                          backgroundColor:const Color(0xffCA0000)  , 
+                          textColor:
+                              Colors.white,  
+                          fontSize: 16.0,  
+                        );
+                      } else {
+                         Fluttertoast.showToast(
+                          msg: "Thank For Review",
+                          toastLength: Toast
+                              .LENGTH_LONG,  
+                          gravity: ToastGravity
+                              .BOTTOM,  
+                          
+                          backgroundColor:  Colors.green  , 
+                          textColor:
+                              Colors.white,  
+                          fontSize: 16.0,  
+                        );
+                      }
+                      },
+                      child: Container(
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xffCA0000))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Not Useful ',
+                              style: TextStyle(
+                                fontSize: size.height * 0.02,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xffCA0000),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.thumb_down,
+                              color: Color(0xffCA0000),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           )),
         ));

@@ -6,8 +6,7 @@ import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/login_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/saved_items_screen.dart';
-import 'package:foodfinder/views/shared_recipe_screen.dart';
-import 'package:foodfinder/views/signup_screen.dart';
+ import 'package:foodfinder/views/signup_screen.dart';
 
 import '../controller/auth_controller/login_controller.dart';
 
