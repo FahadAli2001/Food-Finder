@@ -279,7 +279,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       onTap: () {
                          if (_auth.currentUser == null) {
                         Fluttertoast.showToast(
-                          msg: "Login First",
+                          msg: "You need to Login First",
                           toastLength: Toast
                               .LENGTH_LONG,  
                           gravity: ToastGravity
