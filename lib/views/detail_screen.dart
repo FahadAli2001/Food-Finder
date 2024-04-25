@@ -105,65 +105,58 @@ class _DetailScreenState extends State<DetailScreen> {
                       fontSize: 25,
                     ),
                   ),
-                  SizedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            favoriteItemsController.checkFavorite(
-                              widget.recipeId,
-                              widget.apiData != null
-                                  ? widget.apiData['name']
-                                  : widget.recipe?['title'],
-                              widget.apiData != null
-                                  ? widget.apiData['rating']
-                                  : widget.recipe?['rating'],
-                              widget.apiData != null
-                                  ? widget.apiData['reviewCount']
-                                  : widget.recipe?['reviewCount'],
-                              widget.apiData != null
-                                  ? widget.apiData['description']
-                                  : widget.recipe?['instructions'],
-                              widget.apiData != null
-                                  ? widget.apiData['imageUrl']
-                                  : widget.recipe?['imageUrl'],
-                              widget.apiData != null
-                                  ? widget.apiData['ingredients']
-                                  : widget.recipe?['ingredients'],
-                            );
-                          },
-                          child: StreamBuilder<DocumentSnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('favorites')
-                                .doc(widget.recipeId)
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              }
-                              if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              }
-
-                              if (snapshot.hasData && snapshot.data!.exists) {
-                                return const Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                );
-                              }
-
-                              return const Icon(
-                                Icons.favorite,
-                                color: Colors.white,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                _auth.currentUser!=null?  GestureDetector(
+                    onTap: () {
+                      favoriteItemsController.checkFavorite(
+                        widget.recipeId,
+                        widget.apiData != null
+                            ? widget.apiData['name']
+                            : widget.recipe?['title'],
+                        widget.apiData != null
+                            ? widget.apiData['rating']
+                            : widget.recipe?['rating'],
+                        widget.apiData != null
+                            ? widget.apiData['reviewCount']
+                            : widget.recipe?['reviewCount'],
+                        widget.apiData != null
+                            ? widget.apiData['description']
+                            : widget.recipe?['instructions'],
+                        widget.apiData != null
+                            ? widget.apiData['imageUrl']
+                            : widget.recipe?['imageUrl'],
+                        widget.apiData != null
+                            ? widget.apiData['ingredients']
+                            : widget.recipe?['ingredients'],
+                      );
+                    },
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('favorites')
+                          .doc(widget.recipeId)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                  
+                        if (snapshot.hasData && snapshot.data!.exists) {
+                          return const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          );
+                        }
+                  
+                        return const Icon(
+                          Icons.favorite,
+                          color: Colors.white,
+                        );
+                      },
                     ),
-                  ),
+                  ):SizedBox()
                 ],
               ),
               const SizedBox(height: 10),
