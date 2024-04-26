@@ -67,7 +67,7 @@ class _MapScreenState extends State<MapScreen> {
   String apikey = 'AIzaSyAl8_GZb77k5io7_DCkAFYJHgGqDnzeH2k'; 
    
 
-  final url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=500&type=restaurant&keyword=$word&key=$apikey';
+  final url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=3000&type=restaurant&keyword=$word&key=$apikey';
 
   final response = await http.get(Uri.parse(url));
 
@@ -87,28 +87,7 @@ class _MapScreenState extends State<MapScreen> {
 }
 
 
-  // Future<void> _fetchNearbyRestaurants(String word) async {
-  //   String apikey = 'AIzaSyAl8_GZb77k5io7_DCkAFYJHgGqDnzeH2k';
-  //   final latitude = _currentPosition.latitude;
-  //   final longitude = _currentPosition.longitude;
  
-
-  //   final url =
-  //   'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude.toString()},${longitude.toString()}&radius=1500&type=restaurant&keyword=$word&key=$apikey';
-       
-
-  //   final response = await http.get(Uri.parse(url));
-
-  //   if (response.statusCode == 200) {
-  //     final data = jsonDecode(response.body);
-  //     setState(() {
-  //       _restaurants.add(data['restaurants']);
-  //     });
-  //     log(_restaurants.toString());
-  //   } else {
-  //     log('error ');
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +145,12 @@ class _MapScreenState extends State<MapScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 20),
                     ),
-                    Expanded(
+                 _restaurants.isEmpty?Center(
+                  child: Text('No Restaurants',
+                  style: TextStyle(
+                    color: Colors.white60
+                  ),),
+                 ):   Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         itemCount: _restaurants.length,
