@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
- import 'package:flutter/material.dart';
- import 'package:fluttertoast/fluttertoast.dart';
- import 'package:foodfinder/const/images.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/favorite_items_controller/favorite_items_controller.dart';
 import 'package:foodfinder/views/map_screen.dart';
 
@@ -52,8 +52,37 @@ class _DetailScreenState extends State<DetailScreen> {
           padding: const EdgeInsets.all(15),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const MapScreen()));
+              if (widget.apiData != null &&
+                  widget.apiData.containsKey('predicted_title') &&
+                  widget.apiData['predicted_title'] != '') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MapScreen(
+                      keyword: widget.apiData['predicted_title'],
+                    ),
+                  ),
+                );
+              } else if (widget.recipe != null &&
+                  widget.recipe['title'] != '') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MapScreen(
+                      keyword: widget.recipe['title'],
+                    ),
+                  ),
+                );
+              } else {
+                Fluttertoast.showToast(
+                            msg: "Some thing went erong",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xffCA0000),
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+              }
             },
             child: Container(
               width: size.width,
@@ -228,37 +257,29 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: GestureDetector(
                       onTap: () {
                         if (_auth.currentUser == null) {
-                        Fluttertoast.showToast(
-                          msg: "Login First",
-                          toastLength: Toast
-                              .LENGTH_LONG,  
-                          gravity: ToastGravity
-                              .BOTTOM,  
-                          
-                          backgroundColor:const Color(0xffCA0000)  , 
-                          textColor:
-                              Colors.white,  
-                          fontSize: 16.0,  
-                        );
-                      } else {
-                         Fluttertoast.showToast(
-                          msg: "Thank For Review",
-                          toastLength: Toast
-                              .LENGTH_LONG,  
-                          gravity: ToastGravity
-                              .BOTTOM,  
-                          
-                          backgroundColor:  Colors.green  , 
-                          textColor:
-                              Colors.white,  
-                          fontSize: 16.0,  
-                        );
-                      }
+                          Fluttertoast.showToast(
+                            msg: "Login First",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xffCA0000),
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Thank For Review",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }
                       },
                       child: Container(
                         height: size.height * 0.06,
-                        decoration: BoxDecoration(
-                           color:const Color(0xffCA0000) ),
+                        decoration:
+                            BoxDecoration(color: const Color(0xffCA0000)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -284,39 +305,31 @@ class _DetailScreenState extends State<DetailScreen> {
                     flex: 1,
                     child: GestureDetector(
                       onTap: () {
-                         if (_auth.currentUser == null) {
-                        Fluttertoast.showToast(
-                          msg: "Login First",
-                          toastLength: Toast
-                              .LENGTH_LONG,  
-                          gravity: ToastGravity
-                              .BOTTOM,  
-                          
-                          backgroundColor:const Color(0xffCA0000)  , 
-                          textColor:
-                              Colors.white,  
-                          fontSize: 16.0,  
-                        );
-                      } else {
-                         Fluttertoast.showToast(
-                          msg: "Thank For Review",
-                          toastLength: Toast
-                              .LENGTH_LONG,  
-                          gravity: ToastGravity
-                              .BOTTOM,  
-                          
-                          backgroundColor:  Colors.green  , 
-                          textColor:
-                              Colors.white,  
-                          fontSize: 16.0,  
-                        );
-                      }
+                        if (_auth.currentUser == null) {
+                          Fluttertoast.showToast(
+                            msg: "Login First",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xffCA0000),
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Thank For Review",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }
                       },
                       child: Container(
                         height: size.height * 0.06,
                         decoration: BoxDecoration(
                           color: Colors.grey.shade700,
-                            ),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -325,7 +338,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               style: TextStyle(
                                 fontSize: size.height * 0.02,
                                 fontWeight: FontWeight.bold,
-                                color:   Colors.white,
+                                color: Colors.white,
                               ),
                             ),
                             const Icon(

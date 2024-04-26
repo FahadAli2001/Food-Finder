@@ -1,14 +1,115 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+  final String keyword;
+  const MapScreen({super.key, required this.keyword});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
+  final Completer<GoogleMapController> _controller = Completer();
+  final List<Marker> _markers = <Marker>[];
+   
+  List<dynamic> _restaurants = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getUserCurrentLocation(widget.keyword).then((value) async {
+      CameraPosition cameraPosition = CameraPosition(
+        target: LatLng(value.latitude, value.longitude),
+        zoom: 14,
+      );
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      _markers.add(Marker(
+        markerId: const MarkerId("1"),
+        position: LatLng(value.latitude, value.longitude),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+      _fetchNearbyRestaurants(widget.keyword,value.latitude,value.longitude);
+      log(widget.keyword);
+      setState(() {});
+      
+    });
+  }
+
+  CameraPosition kGooglePlex = const CameraPosition(
+    target: LatLng(33.738045, 73.084488),
+    zoom: 14,
+  );
+
+  Future<Position> getUserCurrentLocation(String keyword) async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) {
+      log(error.toString());
+    });
+
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  Future<void> _fetchNearbyRestaurants(String word,lat,lon) async {
+    
+  String apikey = 'AIzaSyAl8_GZb77k5io7_DCkAFYJHgGqDnzeH2k'; 
+   
+
+  final url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=500&type=restaurant&keyword=$word&key=$apikey';
+
+  final response = await http.get(Uri.parse(url));
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    final results = data['results']; 
+    
+    setState(() {
+      _restaurants.clear(); 
+      _restaurants.addAll(results);  
+    });
+    log(_restaurants[0].toString());
+    
+  } else {
+    print('Error fetching nearby restaurants: ${response.statusCode}');
+  }
+}
+
+
+  // Future<void> _fetchNearbyRestaurants(String word) async {
+  //   String apikey = 'AIzaSyAl8_GZb77k5io7_DCkAFYJHgGqDnzeH2k';
+  //   final latitude = _currentPosition.latitude;
+  //   final longitude = _currentPosition.longitude;
+ 
+
+  //   final url =
+  //   'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude.toString()},${longitude.toString()}&radius=1500&type=restaurant&keyword=$word&key=$apikey';
+       
+
+  //   final response = await http.get(Uri.parse(url));
+
+  //   if (response.statusCode == 200) {
+  //     final data = jsonDecode(response.body);
+  //     setState(() {
+  //       _restaurants.add(data['restaurants']);
+  //     });
+  //     log(_restaurants.toString());
+  //   } else {
+  //     log('error ');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -20,9 +121,20 @@ class _MapScreenState extends State<MapScreen> {
             width: size.width,
             height: size.height,
           ),
-          Image.asset(
-            map,
-            height: size.height * 0.9,
+          GoogleMap(
+            initialCameraPosition: kGooglePlex,
+            mapType: MapType.normal,
+            zoomControlsEnabled: true,
+            zoomGesturesEnabled: true,
+            myLocationButtonEnabled: true,
+            myLocationEnabled: true,
+            trafficEnabled: false,
+            rotateGesturesEnabled: true,
+            buildingsEnabled: true,
+            markers: Set<Marker>.of(_markers),
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
           ),
           Positioned(
               top: 55,
@@ -57,11 +169,24 @@ class _MapScreenState extends State<MapScreen> {
                     Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: 4,
+                        itemCount: _restaurants.length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: Image.asset(restaurants),
+                            child: SizedBox(
+                              width: size.width,
+                              child: ListTile(
+                                leading: Image.network(_restaurants[index]['icon']),
+                                title: Text(_restaurants[index]['name'],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),),
+                                subtitle:Text(_restaurants[index]['vicinity'],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),),
+                              )),
                           );
                         },
                       ),

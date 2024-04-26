@@ -4,7 +4,7 @@ import 'package:foodfinder/controller/auth_controller/change_password_controller
 import 'package:foodfinder/controller/auth_controller/login_controller.dart';
 import 'package:foodfinder/controller/auth_controller/signup_controller.dart';
 import 'package:foodfinder/controller/edit_profile_controller/edit_profle_controller.dart';
-import 'package:foodfinder/firebase_options.dart';
+ import 'package:foodfinder/firebase_options.dart';
 import 'package:foodfinder/views/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoginController()),
         ChangeNotifierProvider(create: (_) => SignupController()),
         ChangeNotifierProvider(create: (_) => EditProfileController()),
-        ChangeNotifierProvider(create: (_)=> ChangePasswordController())
+        ChangeNotifierProvider(create: (_)=> ChangePasswordController()),
+       
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
