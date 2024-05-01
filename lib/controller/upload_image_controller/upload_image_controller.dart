@@ -19,7 +19,7 @@ class UploadImageController {
 
   Future<void> sendImageToAPI(context) async {
     log("send image $image");
-    var uri = Uri.parse('https://377084gf-5000.inc1.devtunnels.ms/predict');
+    var uri = Uri.parse('http://18.138.121.3:5000/predict');
     var request = http.MultipartRequest('POST', uri);
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
     try {
@@ -28,6 +28,7 @@ class UploadImageController {
         log('Image successfully sent to the API');
         var jsonRes = await response.stream.bytesToString();
         apiResData = jsonDecode(jsonRes);
+        log(apiResData.toString());
         // log(apiResData["predicted_title"]);
         // log(apiResData['recipe_details'][0]['ingredients']);
         Navigator.push(

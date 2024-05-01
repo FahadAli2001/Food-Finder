@@ -126,7 +126,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 children: [
                   Text(
                     widget.apiData != null
-                        ? widget.apiData['predicted_title']
+                        ? widget.apiData['title'] ?? ''
                         : widget.recipe?['title'] ?? 'Default Title',
                     style: const TextStyle(
                       color: Colors.white,
