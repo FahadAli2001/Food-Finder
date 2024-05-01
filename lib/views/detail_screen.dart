@@ -53,13 +53,13 @@ class _DetailScreenState extends State<DetailScreen> {
           child: GestureDetector(
             onTap: () {
               if (widget.apiData != null &&
-                  widget.apiData.containsKey('predicted_title') &&
-                  widget.apiData['predicted_title'] != '') {
+                  widget.apiData.containsKey('title') &&
+                  widget.apiData["recipe_details"][0]['title'] != '') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MapScreen(
-                      keyword: widget.apiData['predicted_title'],
+                      keyword: widget.apiData["recipe_details"][0]['title'],
                     ),
                   ),
                 );
@@ -126,7 +126,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 children: [
                   Text(
                     widget.apiData != null
-                        ? widget.apiData['title'] ?? ''
+                        ? widget.apiData["recipe_details"][0]['title']?? ''
                         : widget.recipe?['title'] ?? 'Default Title',
                     style: const TextStyle(
                       color: Colors.white,
