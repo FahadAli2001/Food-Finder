@@ -7,7 +7,6 @@ import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/upload_image_screen.dart';
 import 'package:foodfinder/widgets/custom_drawer.dart';
 import 'package:foodfinder/widgets/widget_recipe_card.dart';
-
 import '../const/images.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -132,98 +131,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                             ),
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => const UploadImageScreen()));
-              //   },
-              //   child: Image.asset(
-              //     uploadbtn,
-              //   ),
-              // ),
+              
               SizedBox(
                 height: size.height * 0.03,
               ),
-              // Align(
-              //   alignment: Alignment.topLeft,
-              //   child: Text(
-              //     'Most Popular Recipes',
-              //     style: TextStyle(
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.bold,
-              //         fontSize: size.height * 0.03),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.03,
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.46,
-              //   child: GridView.builder(
-              //     physics:const NeverScrollableScrollPhysics(),
-              //     itemCount: 4,
-              //     gridDelegate:
-              //         const SliverGridDelegateWithFixedCrossAxisCount(
-              //             crossAxisCount: 2,
-              //             crossAxisSpacing: 15,
-              //             mainAxisSpacing: 15),
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return SizedBox(
-              //         height: size.height * 0.4,
-              //         child: Column(
-              //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //           children: [
-              //             Image.asset(
-              //               salan,
-              //               height: size.height * 0.13,
-              //               fit: BoxFit.fill,
-              //             ),
-              //             const Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 Text(
-              //                   'Salan',
-              //                   style: TextStyle(
-              //                     color: Colors.white,
-              //                     fontWeight: FontWeight.bold,
-              //                   ),
-              //                 ),
-              //                 Icon(
-              //                   Icons.favorite_border_outlined,
-              //                   color: Colors.white,
-              //                 )
-              //               ],
-              //             ),
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 const Text(
-              //                   '4.5',
-              //                   style: TextStyle(
-              //                     color: Colors.white,
-              //                   ),
-              //                 ),
-              //                 Flexible(
-              //                     child: Container(
-              //                   padding: EdgeInsets.all(3),
-              //                   color: Colors.red,
-              //                   child: const Text(
-              //                     'view detail',
-              //                     style: TextStyle(
-              //                       color: Colors.white,
-              //                     ),
-              //                   ),
-              //                 ))
-              //               ],
-              //             ),
-              //           ],
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
+              
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,14 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                         fontSize: size.height * 0.025),
                   ),
-                  //
-                  // Text(
-                  //   'view all',
-                  //   style: TextStyle(
-                  //       color: Colors.white,
-                  //       fontWeight: FontWeight.bold,
-                  //       fontSize: size.height * 0.02),
-                  // ),
+                  
                 ],
               ),
               //
