@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void onSearchChanged(String value) {
     setState(() {
-      _searchTerm = value.toLowerCase();
+      _searchTerm = value;
       stream = FirebaseFirestore.instance
           .collection('recipes')
           .where('title', isEqualTo: _searchTerm)
