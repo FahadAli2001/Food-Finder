@@ -198,7 +198,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
-                    =>SavedItemsScreen()), (route) => false);
+                    =>SavedItemsScreen(
+                      userModel: widget.userModel!,
+                    )), (route) => false);
                   },
                   child: Text(
                     'Saved Items',

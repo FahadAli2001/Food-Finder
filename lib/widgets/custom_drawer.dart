@@ -130,7 +130,9 @@ class CustomDrawer extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const SavedItemsScreen()));
+                                      SavedItemsScreen(
+                                      userModel: userModel!,
+                                    )));
                       },
                       leading: const Icon(
                         Icons.laptop,

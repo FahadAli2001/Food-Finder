@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
  import 'package:flutter/material.dart';
+import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/detail_screen.dart';
+import 'package:foodfinder/views/home_screen.dart';
  import 'package:foodfinder/widgets/widget_recipe_card.dart';
 
 class SavedItemsScreen extends StatefulWidget {
-  const SavedItemsScreen({super.key});
+  final UserModel userModel;
+  const SavedItemsScreen({super.key,required this.userModel});
 
   @override
   State<SavedItemsScreen> createState() => _SavedItemsScreenState();
@@ -29,7 +32,10 @@ class _SavedItemsScreenState extends State<SavedItemsScreen> {
           backgroundColor: Colors.black,
           leading: GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                 Navigator.push(context, MaterialPageRoute(builder: (context)
+                 =>HomeScreen(
+                  userModel:widget.userModel ,
+                 )));
               },
               child: const Icon(
                 Icons.arrow_back_ios,
