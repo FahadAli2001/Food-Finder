@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/edit_profile.dart';
+import 'package:foodfinder/views/saved_items_screen.dart';
 
 import '../controller/auth_controller/login_controller.dart';
 
@@ -200,12 +201,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  'Saved Items',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.02,
-                      fontWeight: FontWeight.w500),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
+                    =>SavedItemsScreen()), (route) => false);
+                  },
+                  child: Text(
+                    'Saved Items',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: size.height * 0.02,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
               SizedBox(
@@ -218,23 +225,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Shared Recipes',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.02,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              SizedBox(
-                width: size.width,
-                child: const Divider(
-                  thickness: 0.3,
-                  color: Colors.white,
-                ),
-              )
+              // Align(
+              //   alignment: Alignment.topLeft,
+              //   child: Text(
+              //     'Shared Recipes',
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: size.height * 0.02,
+              //         fontWeight: FontWeight.w500),
+              //   ),
+              // ),
+              // SizedBox(
+              //   width: size.width,
+              //   child: const Divider(
+              //     thickness: 0.3,
+              //     color: Colors.white,
+              //   ),
+              // )
             ],
           ),
         ),
