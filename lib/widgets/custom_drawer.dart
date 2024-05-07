@@ -67,14 +67,7 @@ class CustomDrawer extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                      _auth.currentUser != null
-                          ? const Text(
-                              "Food Lover",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            )
-                          : Container()
+                     
                     ],
                   )
                 ],

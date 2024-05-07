@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,53 +18,64 @@ class LoginController extends ChangeNotifier{
   bool islogingIn = false;
   UserModel? userModel;
 
-  Future<void> loginUser(context) async {
-    
-    String email = emailController.text;
-    String password = passwordController.text;
+  Future<void> loginUser(BuildContext context) async {
+  String email = emailController.text;
+  String password = passwordController.text;
 
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    try {
-    islogingIn =  true;
-    log(islogingIn.toString());
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      String uid = userCredential.user!.uid;
-      sp.setString('uid', uid);
-      userModel = await fetchUserData(uid);
-
-      if (userModel != null) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                    userModel: userModel!,
-                  )),
-          (route) => false,
-        );
-      }
-
-      islogingIn =  false;
-      
-    } catch (e) {
-      islogingIn =  false;
-      log(e.toString());
-      log(islogingIn.toString());
-     
+  SharedPreferences sp = await SharedPreferences.getInstance();
+  try {
+    if (!EmailValidator.validate(email)) {
       Fluttertoast.showToast(
-          msg: e.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+        msg: 'Please enter a valid email address',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
       
-    } 
-     notifyListeners();
+    }
+
+    islogingIn = true;
+    log(islogingIn.toString());
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    String uid = userCredential.user!.uid;
+    sp.setString('uid', uid);
+    userModel = await fetchUserData(uid);
+
+    if (userModel != null) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(
+            userModel: userModel!,
+          ),
+        ),
+        (route) => false,
+      );
+    }
+
+    islogingIn = false;
+  } catch (e) {
+    islogingIn = false;
+    log(e.toString());
+    log(islogingIn.toString());
+
+    Fluttertoast.showToast(
+      msg: e.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
+  notifyListeners();
+}
 
   Future<UserModel?> fetchUserData(String userId) async {
     try {

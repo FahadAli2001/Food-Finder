@@ -105,13 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //  SizedBox(
               //   height: size.height * 0.01,
               // ),
-              Text(
-                'Food Lover',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: size.height * 0.02,
-                ),
-              ),
+              
               SizedBox(
                 height: size.height * 0.03,
               ),

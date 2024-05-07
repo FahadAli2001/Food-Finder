@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
@@ -57,30 +58,43 @@ class SignupController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signUp(context) async {
-    String email = emailController.text;
-    String password = passwordController.text;
-    try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      String uid = userCredential.user!.uid;
-
-      saveUserData(context, uid);
-    } catch (e) {
-      isSigningUp = false;
-      log(e.toString());
+ Future<void> signUp(BuildContext context) async {
+  String email = emailController.text;
+  String password = passwordController.text;
+  try {
+    if (!EmailValidator.validate(email)) {
       Fluttertoast.showToast(
-          msg: e.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+        msg: 'Please enter a valid email address',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+  
     }
-    notifyListeners();
+
+    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    String uid = userCredential.user!.uid;
+
+    saveUserData(context, uid);
+  } catch (e) {
+    isSigningUp = false;
+    log(e.toString());
+    Fluttertoast.showToast(
+      msg: e.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
+  notifyListeners();
+}
 
   Future<void> saveUserData(context, String uid) async {
     try {
