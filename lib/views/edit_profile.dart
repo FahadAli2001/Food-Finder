@@ -54,13 +54,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       onTap: () {
                         if (widget.userModel != null &&
                             widget.userModel!.uid != null &&
-                            widget.userModel!.uid!.isNotEmpty &&
-                            context != null) {
+                            widget.userModel!.uid!.isNotEmpty  ) {
                           editProfileController.uploadUserDataAndImage(
                               widget.userModel!.uid!, context);
                           setState(() {});
                         } else {
-                          
                           Fluttertoast.showToast(
                             msg: "Please log in first !!",
                             toastLength: Toast.LENGTH_SHORT,
@@ -227,11 +225,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       SizedBox(
                         height: size.height * 0.02,
                       ),
-                      CustomTextField(
-                          obsecure: false,
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.06,
+                        child: TextField(
+                          enabled: false,
                           controller: editProfileController.emailController,
-                          labelText: 'Email',
-                          hintext: 'Email'),
+                          style: const TextStyle(color: Colors.white70),
+                          decoration: InputDecoration(
+                              hintText: 'Email',
+                              hintStyle: const TextStyle(color: Colors.white70),
+                              labelText: 'Email',
+                              labelStyle:
+                                  const TextStyle(color: Colors.white70),
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: Colors.white70,
+                              )),
+                              focusColor: Colors.white70,
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: Colors.white70,
+                              )),
+                              enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: Colors.white70,
+                              ))),
+                        ),
+                      ),
                       SizedBox(
                         height: size.height * 0.02,
                       ),
