@@ -116,7 +116,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     )
                   : Image.file(
                       widget.image!,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       width: size.width,
                       height: size.height * 0.3,
                     ),
