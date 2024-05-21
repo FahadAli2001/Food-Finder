@@ -48,13 +48,13 @@ class RecipeCard extends StatelessWidget {
           imageUrl != ' ' && imageUrl.isNotEmpty
               ? Image.network(
                   imageUrl,
-                  width: size.width * 0.35,
+                  width: size.width * 0.25,
                   height: MediaQuery.of(context).size.height,
                   fit: BoxFit.cover,
                 )
               : Image.asset(
                   salan,
-                  width: size.width * 0.35,
+                  width: size.width * 0.25,
                   height: MediaQuery.of(context).size.height,
                   fit: BoxFit.fill,
                 ),
@@ -63,14 +63,14 @@ class RecipeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(
-                width: size.width * 0.35,
+                width: size.width * 0.3,
                 child: Text(
                   name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.height * 0.025,
+                    fontSize: MediaQuery.of(context).size.height * 0.02,
                   ),
                 ),
               ),
@@ -85,7 +85,7 @@ class RecipeCard extends StatelessWidget {
                     ' ${rating } (${reviewCount } Reviews)',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: MediaQuery.of(context).size.height * 0.016,
+                      fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
                   ),
                 ],
@@ -94,7 +94,8 @@ class RecipeCard extends StatelessWidget {
                 width: size.width * 0.35,
                 child: Text(
                   description  ,
-                  maxLines: 3,
+                  maxLines: 4,
+                  
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.white,
