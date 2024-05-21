@@ -26,6 +26,45 @@ class _DetailScreenState extends State<DetailScreen> {
   FavoriteItemsController favoriteItemsController = FavoriteItemsController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  Future<void> checkAndNavigate(String title) async {
+    try {
+      var querySnapshot = await FirebaseFirestore.instance
+          .collection('recipes')
+          .where('apiName', isEqualTo: title)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MapScreen(
+              keyword: querySnapshot.docs.first['title'],
+            ),
+          ),
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Recipe not found in Firebase",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: const Color(0xffCA0000),
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "An error occurred: $e",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: const Color(0xffCA0000),
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -55,14 +94,7 @@ class _DetailScreenState extends State<DetailScreen> {
               if (widget.apiData != null &&
                   widget.apiData.containsKey('title') &&
                   widget.apiData["recipe_details"][0]['title'] != '') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MapScreen(
-                      keyword: widget.apiData["recipe_details"][0]['title'],
-                    ),
-                  ),
-                );
+                checkAndNavigate(widget.apiData["recipe_details"][0]['title']);
               } else if (widget.recipe != null &&
                   widget.recipe['title'] != '') {
                 Navigator.push(
@@ -75,13 +107,13 @@ class _DetailScreenState extends State<DetailScreen> {
                 );
               } else {
                 Fluttertoast.showToast(
-                            msg: "Some thing went erong",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: const Color(0xffCA0000),
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                  msg: "Some thing went erong",
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  backgroundColor: const Color(0xffCA0000),
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
               }
             },
             child: Container(
@@ -126,7 +158,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 children: [
                   Text(
                     widget.apiData != null
-                        ? widget.apiData["recipe_details"][0]['title']?? ''
+                        ? widget.apiData["recipe_details"][0]['title'] ?? ''
                         : widget.recipe?['title'] ?? 'Default Title',
                     style: const TextStyle(
                       color: Colors.white,
@@ -134,58 +166,60 @@ class _DetailScreenState extends State<DetailScreen> {
                       fontSize: 25,
                     ),
                   ),
-                _auth.currentUser!=null?  GestureDetector(
-                    onTap: () {
-                      favoriteItemsController.checkFavorite(
-                        widget.recipeId,
-                        widget.apiData != null
-                            ? widget.apiData['name']
-                            : widget.recipe?['title'],
-                        widget.apiData != null
-                            ? widget.apiData['rating']
-                            : widget.recipe?['rating'],
-                        widget.apiData != null
-                            ? widget.apiData['reviewCount']
-                            : widget.recipe?['reviewCount'],
-                        widget.apiData != null
-                            ? widget.apiData['description']
-                            : widget.recipe?['instructions'],
-                        widget.apiData != null
-                            ? widget.apiData['imageUrl']
-                            : widget.recipe?['imageUrl'],
-                        widget.apiData != null
-                            ? widget.apiData['ingredients']
-                            : widget.recipe?['ingredients'],
-                      );
-                    },
-                    child: StreamBuilder<DocumentSnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('favorites')
-                          .doc(widget.recipeId)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-                  
-                        if (snapshot.hasData && snapshot.data!.exists) {
-                          return const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          );
-                        }
-                  
-                        return const Icon(
-                          Icons.favorite,
-                          color: Colors.white,
-                        );
-                      },
-                    ),
-                  ):SizedBox()
+                  _auth.currentUser != null
+                      ? GestureDetector(
+                          onTap: () {
+                            favoriteItemsController.checkFavorite(
+                              widget.recipeId,
+                              widget.apiData != null
+                                  ? widget.apiData['name']
+                                  : widget.recipe?['title'],
+                              widget.apiData != null
+                                  ? widget.apiData['rating']
+                                  : widget.recipe?['rating'],
+                              widget.apiData != null
+                                  ? widget.apiData['reviewCount']
+                                  : widget.recipe?['reviewCount'],
+                              widget.apiData != null
+                                  ? widget.apiData['description']
+                                  : widget.recipe?['instructions'],
+                              widget.apiData != null
+                                  ? widget.apiData['imageUrl']
+                                  : widget.recipe?['imageUrl'],
+                              widget.apiData != null
+                                  ? widget.apiData['ingredients']
+                                  : widget.recipe?['ingredients'],
+                            );
+                          },
+                          child: StreamBuilder<DocumentSnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('favorites')
+                                .doc(widget.recipeId)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              }
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+
+                              if (snapshot.hasData && snapshot.data!.exists) {
+                                return const Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                );
+                              }
+
+                              return const Icon(
+                                Icons.favorite,
+                                color: Colors.white,
+                              );
+                            },
+                          ),
+                        )
+                      : SizedBox()
                 ],
               ),
               const SizedBox(height: 10),
@@ -298,33 +332,25 @@ class _DetailScreenState extends State<DetailScreen> {
                     flex: 1,
                     child: GestureDetector(
                       onTap: () {
-                         if (_auth.currentUser == null) {
-                        Fluttertoast.showToast(
-                          msg: "Login First",
-                          toastLength: Toast
-                              .LENGTH_LONG,  
-                          gravity: ToastGravity
-                              .BOTTOM,  
-                          
-                          backgroundColor:const Color(0xffCA0000)  , 
-                          textColor:
-                              Colors.white,  
-                          fontSize: 16.0,  
-                        );
-                      } else {
-                         Fluttertoast.showToast(
-                          msg: "Thank For Review",
-                          toastLength: Toast
-                              .LENGTH_LONG,  
-                          gravity: ToastGravity
-                              .BOTTOM,  
-                          
-                          backgroundColor:  Colors.green  , 
-                          textColor:
-                              Colors.white,  
-                          fontSize: 16.0,  
-                        );
-                      }
+                        if (_auth.currentUser == null) {
+                          Fluttertoast.showToast(
+                            msg: "Login First",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xffCA0000),
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Thank For Review",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }
                       },
                       child: Container(
                         height: size.height * 0.06,
