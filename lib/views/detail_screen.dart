@@ -91,30 +91,44 @@ class _DetailScreenState extends State<DetailScreen> {
           padding: const EdgeInsets.all(15),
           child: GestureDetector(
             onTap: () {
-              if (widget.apiData != null &&
-                  widget.apiData.containsKey('title') &&
-                  widget.apiData["recipe_details"][0]['title'] != '') {
-                checkAndNavigate(widget.apiData["recipe_details"][0]['title']);
-              } else if (widget.recipe != null &&
-                  widget.recipe['title'] != '') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MapScreen(
-                      keyword: widget.recipe['title'],
-                    ),
-                  ),
-                );
-              } else {
-                Fluttertoast.showToast(
-                  msg: "Some thing went erong",
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: const Color(0xffCA0000),
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                );
-              }
+                     try {
+          if (widget.apiData != null &&
+              widget.apiData !.containsKey('recipe_details') &&
+              widget.apiData !["recipe_details"] is List &&
+              widget.apiData !["recipe_details"].isNotEmpty &&
+              widget.apiData !["recipe_details"][0].containsKey('title') &&
+              widget.apiData !["recipe_details"][0]['title'].isNotEmpty) {
+            checkAndNavigate(widget.apiData !["recipe_details"][0]['title']);
+
+          } else if (widget.recipe != null && widget.recipe!.containsKey('title') && widget.recipe!['title'].isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MapScreen(
+                  keyword: widget.recipe!['title'],
+                ),
+              ),
+            );
+          } else {
+            Fluttertoast.showToast(
+              msg: "Something went wrong",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: const Color(0xffCA0000),
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+          }
+        } catch (e) {
+          Fluttertoast.showToast(
+            msg: "An error occurred: ${e.toString()}",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: const Color(0xffCA0000),
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
             },
             child: Container(
               width: size.width,
