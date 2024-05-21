@@ -14,7 +14,7 @@ class UploadImageScreen extends StatefulWidget {
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
   UploadImageController uploadImageController = UploadImageController();
-  
+
 
   Future getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -56,12 +56,12 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             uploadImageController.image == null
-                ? Image.asset(uploadImage)
-                : Image.file(uploadImageController.image!),
+                ? Center(child: Image.asset(uploadImage))
+                : Center(child: Image.file(uploadImageController.image!)),
               SizedBox(
               height: size.height *0.1,
             ),
-            Row(
+         uploadImageController.isSearching == true ?CircularProgressIndicator():   Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
