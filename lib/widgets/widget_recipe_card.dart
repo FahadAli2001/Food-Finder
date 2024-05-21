@@ -7,6 +7,7 @@ import 'package:foodfinder/controller/favorite_items_controller/favorite_items_c
 
 // ignore: must_be_immutable
 class RecipeCard extends StatelessWidget {
+  final String apiName;
   final String name;
   final String id;
   final String rating;
@@ -17,6 +18,7 @@ class RecipeCard extends StatelessWidget {
 
   RecipeCard(
       {super.key,
+      required this.apiName,
       required this.name,
       required this.rating,
       required this.reviewCount,
@@ -33,81 +35,91 @@ class RecipeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Card(
-      elevation: 20,
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.2,
-        width: MediaQuery.of(context).size.width,
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: Row(
+  elevation: 20,
+  child: Container(
+    height: MediaQuery.of(context).size.height * 0.2,
+    width: MediaQuery.of(context).size.width,
+    color: Colors.black,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          imageUrl != ' ' && imageUrl.isNotEmpty
+              ? Image.network(
+                  imageUrl,
+                  width: size.width * 0.35,
+                  height: MediaQuery.of(context).size.height,
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  salan,
+                  width: size.width * 0.35,
+                  height: MediaQuery.of(context).size.height,
+                  fit: BoxFit.fill,
+                ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              imageUrl.isNotEmpty
-                  ? Image.network(
-                      imageUrl,
-                      width: size.width * 0.35,
-                      height: MediaQuery.of(context).size.height,
-                     fit: BoxFit.cover,
-                    )
-                  : Image.asset(
-                      salan,
-                      width: size.width * 0.35,
-                      height: MediaQuery.of(context).size.height,
-                      fit: BoxFit.fill,
-                    ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              SizedBox(
+                width: size.width * 0.35,
+                child: Text(
+                  name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                ),
+              ),
+              Row(
                 children: [
-                  SizedBox(
-                    width: size.width * 0.35,
-                    child: Text(
-                      name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.height * 0.025,
-                      ),
-                    ),
+                  const Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                    size: 15,
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 15,
-                      ),
-                      Text(
-                        ' $rating ($reviewCount Reviews)',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.height * 0.016,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: size.width * 0.35,
-                    child: Text(
-                      description,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.height * 0.016,
-                      ),
+                  Text(
+                    ' ${rating } (${reviewCount } Reviews)',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: MediaQuery.of(context).size.height * 0.016,
                     ),
                   ),
                 ],
               ),
-           _auth.currentUser != null?   Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
+              SizedBox(
+                width: size.width * 0.35,
+                child: Text(
+                  description  ,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: MediaQuery.of(context).size.height * 0.016,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          _auth.currentUser != null
+              ? Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
                     onTap: () {
-                      favoriteItemsController.checkFavorite(id, name, rating,
-                          reviewCount, description, imageUrl, ingredients!);
+                      if (id != '' && name != '' && rating != '' && reviewCount != '' && description != '' && imageUrl != ''&& ingredients != null) {
+                        favoriteItemsController.checkFavorite(
+                          id,
+                          name,
+                          rating,
+                          reviewCount,
+                          description,
+                          imageUrl,
+                          ingredients!,
+                        );
+                      }
                     },
                     child: StreamBuilder<DocumentSnapshot>(
                       stream: FirebaseFirestore.instance
@@ -115,33 +127,34 @@ class RecipeCard extends StatelessWidget {
                           .doc(id)
                           .snapshots(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return const CircularProgressIndicator(); // Placeholder while loading data
                         }
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         }
 
-                      if (snapshot.hasData && snapshot.data!.exists) {
-                        return  const Icon(
-                          Icons.favorite,
-                          color:  Colors.red  ,
-                        );
-                      }
-                       
-                     
+                        if (snapshot.hasData && snapshot.data!.exists) {
+                          return const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          );
+                        }
+
                         return const Icon(
                           Icons.favorite,
-                          color:  Colors.white,
+                          color: Colors.white,
                         );
                       },
-                    )),
-              ):Container()
-            ],
-          ),
-        ),
+                    ),
+                  ),
+                )
+              : Container(),
+        ],
       ),
-    );
+    ),
+  ),
+);
+
   }
 }

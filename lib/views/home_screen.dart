@@ -209,6 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   },
                                   child: RecipeCard(
+                                    apiName: data['apiName'],
                                     id: snapshot.data!.docs[index].id,
                                     name: data['title'],
                                     rating: data['rating'],
@@ -288,6 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             description: data['instructions'],
                                             imageUrl: data['imageUrl'],
                                             ingredients: data['ingredients'],
+                                            apiName: data['apiName'],
                                           ),
                                         );
                                       },

@@ -76,6 +76,7 @@ class _SavedItemsScreenState extends State<SavedItemsScreen> {
                          
                         },
                         child: RecipeCard(
+                          apiName: data['apiName'],
                           id: snapshot.data!.docs[index].id,
                           name: data['title'],
                           rating: data['rating'],
