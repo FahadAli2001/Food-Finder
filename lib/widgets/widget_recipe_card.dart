@@ -105,52 +105,113 @@ class RecipeCard extends StatelessWidget {
               ),
             ],
           ),
-          _auth.currentUser == null
-              ? SizedBox()
-              : Align(
-                  alignment: Alignment.topRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      if (id != '' && name != '' && rating != '' && reviewCount != '' && description != '' && imageUrl != ''&& ingredients != null) {
-                        favoriteItemsController.checkFavorite(
-                          id,
-                          name,
-                          rating,
-                          reviewCount,
-                          description,
-                          imageUrl,
-                          ingredients!,
-                        );
-                      }
-                    },
-                    child: StreamBuilder<DocumentSnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('favorites')
-                          .doc(id)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const CircularProgressIndicator(); // Placeholder while loading data
-                        }
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-
-                        if (snapshot.hasData && snapshot.data!.exists) {
-                          return const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
+          StreamBuilder<User?>(
+                stream: _auth.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
+                  return Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (id.isNotEmpty &&
+                            name.isNotEmpty &&
+                            rating.isNotEmpty &&
+                            reviewCount.isNotEmpty &&
+                            description.isNotEmpty &&
+                            imageUrl.isNotEmpty &&
+                            ingredients != null) {
+                          favoriteItemsController.checkFavorite(
+                            id,
+                            name,
+                            rating,
+                            reviewCount,
+                            description,
+                            imageUrl,
+                            ingredients!,
                           );
                         }
-
-                        return const Icon(
-                          Icons.favorite,
-                          color: Colors.white,
-                        );
                       },
+                      child: StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('favorites')
+                            .doc(id)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator(); // Placeholder while loading data
+                          }
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+
+                          if (snapshot.hasData && snapshot.data!.exists) {
+                            return const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            );
+                          }
+
+                          return const Icon(
+                            Icons.favorite_border,
+                            color: Colors.white,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
+              ),
+          // _auth.currentUser == null
+          //     ? SizedBox()
+          //     : Align(
+          //         alignment: Alignment.topRight,
+          //         child: GestureDetector(
+          //           onTap: () {
+          //             if (id != '' && name != '' && rating != '' && reviewCount != '' && description != '' && imageUrl != ''&& ingredients != null) {
+          //               favoriteItemsController.checkFavorite(
+          //                 id,
+          //                 name,
+          //                 rating,
+          //                 reviewCount,
+          //                 description,
+          //                 imageUrl,
+          //                 ingredients!,
+          //               );
+          //             }
+          //           },
+          //           child: StreamBuilder<DocumentSnapshot>(
+          //             stream: FirebaseFirestore.instance
+          //                 .collection('favorites')
+          //                 .doc(id)
+          //                 .snapshots(),
+          //             builder: (context, snapshot) {
+          //               if (snapshot.connectionState == ConnectionState.waiting) {
+          //                 return const CircularProgressIndicator(); // Placeholder while loading data
+          //               }
+          //               if (snapshot.hasError) {
+          //                 return Text('Error: ${snapshot.error}');
+          //               }
+
+          //               if (snapshot.hasData && snapshot.data!.exists) {
+          //                 return const Icon(
+          //                   Icons.favorite,
+          //                   color: Colors.red,
+          //                 );
+          //               }
+
+          //               return const Icon(
+          //                 Icons.favorite,
+          //                 color: Colors.white,
+          //               );
+          //             },
+          //           ),
+          //         ),
+          //       ),
         ],
       ),
     ),
