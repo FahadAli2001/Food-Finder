@@ -264,6 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Text('Error: ${snapshot.error}'));
                                   } else {
                                     return ListView.builder(
+                                      scrollDirection: Axis.vertical,
                                       itemCount: snapshot.data!.docs.length,
                                       itemBuilder: (context, index) {
                                         Map<String, dynamic> data =
@@ -285,13 +286,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                           child: RecipeCard(
                                             id: snapshot.data!.docs[index].id,
-                                            name: data['title'],
-                                            rating: data['ratings'],
-                                            reviewCount: data['reviewCount'],
-                                            description: data['instructions'],
-                                            imageUrl: data['imageUrl'],
-                                            ingredients: data['ingredients'],
-                                            apiName: data['apiName'],
+                                            name: data['title'] ?? '',
+                                            rating: data['ratings'] ?? '0',
+                                            reviewCount: data['reviewCount'] ?? '',
+                                            description: data['instructions'] ?? '',
+                                            imageUrl: data['imageUrl'] ?? '',
+                                            ingredients: data['ingredients'] ?? '',
+                                            apiName: data['apiName'] ?? '',
                                           ),
                                         );
                                       },

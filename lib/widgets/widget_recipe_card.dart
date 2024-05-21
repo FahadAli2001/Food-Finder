@@ -105,8 +105,9 @@ class RecipeCard extends StatelessWidget {
               ),
             ],
           ),
-          _auth.currentUser != null
-              ? Align(
+          _auth.currentUser == null
+              ? SizedBox()
+              : Align(
                   alignment: Alignment.topRight,
                   child: GestureDetector(
                     onTap: () {
@@ -149,8 +150,7 @@ class RecipeCard extends StatelessWidget {
                       },
                     ),
                   ),
-                )
-              : Container(),
+                ),
         ],
       ),
     ),
