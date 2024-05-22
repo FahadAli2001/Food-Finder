@@ -82,7 +82,7 @@ class RecipeCard extends StatelessWidget {
                     size: 15,
                   ),
                   Text(
-                    ' ${rating } (${reviewCount } Reviews)',
+                    '(${reviewCount } Reviews)',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: MediaQuery.of(context).size.height * 0.014,
