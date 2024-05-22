@@ -57,6 +57,8 @@ class LoginController extends ChangeNotifier{
         ),
         (route) => false,
       );
+      emailController.clear();
+      passwordController.clear();
     }
 
     islogingIn = false;

@@ -263,8 +263,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                   ? widget.apiData['name']
                                   : widget.recipe?['title'],
                               widget.apiData != null
-                                  ? widget.apiData['rating']
-                                  : widget.recipe?['rating'],
+                                  ? widget.apiData['ratings']
+                                  : widget.recipe?['ratings'],
                               widget.apiData != null
                                   ? widget.apiData['reviewCount']
                                   : widget.recipe?['reviewCount'],

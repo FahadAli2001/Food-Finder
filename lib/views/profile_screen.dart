@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/edit_profile.dart';
@@ -15,6 +16,28 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   LoginController loginController = LoginController();
+
+  int _favoritesCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchFavoritesCount();
+  }
+
+  Future<void> _fetchFavoritesCount() async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('favorites').get();
+      setState(() {
+        _favoritesCount = snapshot.docs.length;
+      });
+    } catch (e) {
+      print('Error fetching favorites count: $e');
+      setState(() {
+        _favoritesCount = 0; // Set to 0 in case of error
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -115,27 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Column(
                     children: [
                       Text(
-                        '59',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: size.height * 0.03,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.01,
-                      ),
-                      const Text(
-                        'Recipes Shared',
-                        style: TextStyle(
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        '08',
+                        _favoritesCount.toString(),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: size.height * 0.03,

@@ -53,26 +53,37 @@ class ChangePasswordController extends ChangeNotifier {
     }
   }
 
-  Future<void> changePassword(String newPassword) async {
-    try {
-      User? user = auth.currentUser;
+  Future<void> changePassword(  String newPassword) async {
+  try {
+    User? user = auth.currentUser;
 
-      if (user != null) {
-        // Update the password
-        await user.updatePassword(newPassword);
-        log('Password updated successfully');
-      }
-    } catch (e) {
-      log('Error changing password: $e');
+    if (user != null) {
+      // Re-authenticate the user
+      AuthCredential credential = EmailAuthProvider.credential(email: user.email!, password: passController.text);
+      await user.reauthenticateWithCredential(credential);
+
+      // Update the password
+      await user.updatePassword(newPassword);
+      log('Password updated successfully');
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Password updated successfully',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.green,
           textColor: Colors.white,
           fontSize: 16.0);
     }
+  } catch (e) {
+    log('Error changing password: $e');
+    Fluttertoast.showToast(
+        msg: 'Error: ${e.toString()}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
+}
 
   void clearfields(){
     newPassController.clear();

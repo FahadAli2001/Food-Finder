@@ -8,7 +8,6 @@ class FavoriteItemsController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> checkFavorite(
-   
       String documentId,
       String name,
       String rating,
@@ -35,7 +34,7 @@ class FavoriteItemsController {
       } else {
         log('Document does not exist');
         markFavorite(documentId, name, rating, reviewCount, description,
-            imageUrl, ingredients);
+            imageUrl, ingredients,apiName);
         Fluttertoast.showToast(
           msg: "Bookmark Added",
           toastLength: Toast.LENGTH_LONG,
@@ -57,7 +56,9 @@ class FavoriteItemsController {
       String reviewCount,
       String description,
       String imageUrl,
-      List ingredients) async {
+      List ingredients,
+      String apiName
+      ) async {
     try {
       _firestore.collection('favorites').doc(documentId).set({
         "title": name,
@@ -65,7 +66,8 @@ class FavoriteItemsController {
         "instructions": description,
         "imageUrl": imageUrl,
         "reviewCount": reviewCount,
-        "ingredients": ingredients
+        "ingredients": ingredients,
+        "apiName":apiName
       });
     } catch (e) {
       log('Error marking favorite: $e');
