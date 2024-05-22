@@ -277,6 +277,10 @@ class _DetailScreenState extends State<DetailScreen> {
                               widget.apiData != null
                                   ? widget.apiData['ingredients']
                                   : widget.recipe?['ingredients'],
+                               widget.apiData != null
+                                  ? widget.apiData["recipe_details"][0]['title']
+                                  : widget.recipe['apiName'],
+
                             );
                           },
                           child: StreamBuilder<DocumentSnapshot>(

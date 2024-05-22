@@ -8,13 +8,16 @@ class FavoriteItemsController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> checkFavorite(
+   
       String documentId,
       String name,
       String rating,
       String reviewCount,
       String description,
       String imageUrl,
-      List ingredients) async {
+      List ingredients,
+       String apiName,
+      ) async {
     try {
       DocumentSnapshot documentSnapshot =
           await _firestore.collection('favorites').doc(documentId).get();

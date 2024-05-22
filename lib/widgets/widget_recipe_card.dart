@@ -133,6 +133,8 @@ class RecipeCard extends StatelessWidget {
                             description,
                             imageUrl,
                             ingredients!,
+                            apiName
+                            
                           );
                         }
                       },
