@@ -47,6 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
  
 
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -211,10 +213,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   },
                                   child: RecipeCard(
-                                    apiName: data['apiName'],
+                                    apiName: data['apiName'] ?? '',
                                     id: snapshot.data!.docs[index].id,
                                     name: data['title'],
-                                    rating: data['rating'],
+                                    rating: data['ratings'] ?? '0',
                                     reviewCount: data['reviewCount'],
                                     description: data['instructions'],
                                     imageUrl: data['imageUrl'],
