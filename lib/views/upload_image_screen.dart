@@ -67,8 +67,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                 GestureDetector(
                     onTap: () {
                       getImage(ImageSource.camera);
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)
-                      // =>  DetailScreen()));
+                      
                     },
                     child: Image.asset(captureImageBtn)),
                   SizedBox(
