@@ -163,7 +163,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            
                                             backgroundColor: Colors.black,
                                             title: const Text(
                                               'Choose Image Source',
