@@ -24,7 +24,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
 
     getUserCurrentLocation(widget.keyword).then((value) async {
@@ -64,7 +64,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _fetchNearbyRestaurants(String word,lat,lon) async {
     
-  String apikey = 'AIzaSyAl8_GZb77k5io7_DCkAFYJHgGqDnzeH2k'; 
+  String apikey = ''; 
    
 
   final url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=3000&type=restaurant&keyword=$word&key=$apikey';
