@@ -60,7 +60,7 @@ android {
           release {
                keyAlias keystoreProperties['keyAlias']
                keyPassword keystoreProperties['keyPassword']
-               storeFile file("/users/zemfar/upload-keystore.jks")
+               storeFile file("D:/flutter_projects/upload-keystore.jks")
                storePassword keystoreProperties['storePassword']
            }
        }
