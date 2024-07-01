@@ -60,7 +60,7 @@ android {
           release {
                keyAlias keystoreProperties['keyAlias']
                keyPassword keystoreProperties['keyPassword']
-               storeFile file("/user/zemfar/upload-keystore.jks")
+               storeFile file("/Users/zemfar/upload-keystore.jks")
                storePassword keystoreProperties['storePassword']
            }
        }
