@@ -37,7 +37,7 @@ class UploadImageController extends ChangeNotifier {
           isSearching = false;
           notifyListeners();
           Fluttertoast.showToast(
-              msg: 'Please Insert Correct Image',
+              msg: 'Please Upload Correct Image',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               backgroundColor: Colors.red,
