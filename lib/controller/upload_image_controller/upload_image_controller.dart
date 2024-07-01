@@ -34,23 +34,25 @@ class UploadImageController extends ChangeNotifier {
         apiResData = jsonDecode(jsonRes);
         log(apiResData.toString());
         if (apiResData['error'] == "Please Insert Correct Image") {
+          isSearching = false;
+          notifyListeners();
           Fluttertoast.showToast(
-          msg: 'Please Insert Correct Image',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+              msg: 'Please Insert Correct Image',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+              Navigator.pop(context);
         } else {
-           Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailScreen(
-                      apiData: apiResData,
-                      image: image,
-                    )));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailScreen(
+                        apiData: apiResData,
+                        image: image,
+                      )));
         }
-       
       } else {
         isSearching = false;
         notifyListeners();
@@ -61,7 +63,7 @@ class UploadImageController extends ChangeNotifier {
       isSearching = false;
       notifyListeners();
       log('Error sending image: $error');
-      
+
       // Handle the error
     }
   }

@@ -64,7 +64,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _fetchNearbyRestaurants(String word,lat,lon) async {
     
-  String apikey = ''; 
+  String apikey = 'AIzaSyBjCrbQO3gB6b27MTEeV00RvgrrkCkRCCw'; 
    
 
   final url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=3000&type=restaurant&keyword=$word&key=$apikey';
