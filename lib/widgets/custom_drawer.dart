@@ -6,7 +6,8 @@ import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/login_screen.dart';
 import 'package:foodfinder/views/profile_screen.dart';
 import 'package:foodfinder/views/saved_items_screen.dart';
- import 'package:foodfinder/views/signup_screen.dart';
+import 'package:foodfinder/views/signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controller/auth_controller/login_controller.dart';
 
@@ -61,13 +62,15 @@ class CustomDrawer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${userModel?.fname ?? ''} ${userModel?.lname ?? 'Guest'}',
+                        userModel == null || userModel!.fname == null
+                            ? 'Guest'
+                            : '${userModel!.fname} ${userModel!.lname}',
                         style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                     
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
                     ],
                   )
                 ],
@@ -129,8 +132,7 @@ class CustomDrawer extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                      SavedItemsScreen(
+                                builder: (context) => SavedItemsScreen(
                                       userModel: userModel!,
                                     )));
                       },
@@ -195,84 +197,90 @@ class CustomDrawer extends StatelessWidget {
               const Spacer(),
               _auth.currentUser != null
                   ? GestureDetector(
-                    onTap: () {
-                      _auth.signOut().then((value) {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const 
-                        LoginScreen()), (route) => false);
-                      });
-                    },
-                    child: Container(
-                        width: size.width,
-                        height: size.height * 0.05,
-                        color:const Color(0xffCA0000),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.logout,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: size.width * 0.03,
-                            ),
-                            Text(
-                              'Log out',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: size.height * 0.02),
-                            ),
-                          ],
-                        )),
-                  )
+                      onTap: () async {
+                        SharedPreferences sp =
+                            await SharedPreferences.getInstance();
+                        sp.clear();
+                        _auth.signOut().then((value) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                              (route) => false);
+                        });
+                      },
+                      child: Container(
+                          width: size.width,
+                          height: size.height * 0.05,
+                          color: const Color(0xffCA0000),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.logout,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: size.width * 0.03,
+                              ),
+                              Text(
+                                'Log out',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: size.height * 0.02),
+                              ),
+                            ],
+                          )),
+                    )
                   : Column(
-                    children: [
-                      Container(
-                          width: size.width,
-                          height: size.height * 0.05,
-                          color:const Color(0xffCA0000),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen()));
-                              },
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: size.height * 0.02),
+                      children: [
+                        Container(
+                            width: size.width,
+                            height: size.height * 0.05,
+                            color: const Color(0xffCA0000),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()));
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: size.height * 0.02),
+                                ),
                               ),
-                            ),
-                          )),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                           Container(
-                          width: size.width,
-                          height: size.height * 0.05,
-                          color:const Color(0xffCA0000),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignupScreen()));
-                              },
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: size.height * 0.02),
+                            )),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        Container(
+                            width: size.width,
+                            height: size.height * 0.05,
+                            color: const Color(0xffCA0000),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignupScreen()));
+                                },
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: size.height * 0.02),
+                                ),
                               ),
-                            ),
-                          )),
-                    ],
-                  )
+                            )),
+                      ],
+                    )
             ],
           ),
         ),

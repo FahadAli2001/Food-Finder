@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfinder/views/login_screen.dart';
- 
+
 class SignupController extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -18,13 +18,12 @@ class SignupController extends ChangeNotifier {
   bool isSigningUp = false;
 
   void checkAllFieldsAreFilled(context) {
-     
     if (firstNameController.text == ' ' ||
         lastNameController.text == ' ' ||
         emailController.text == ' ' ||
         passwordController.text == ' ' ||
-        cPasswordController.text == ' ' ) {
-          isSigningUp = false;
+        cPasswordController.text == ' ') {
+      isSigningUp = false;
       Fluttertoast.showToast(
         msg: "Please fill all the fields",
         toastLength: Toast.LENGTH_SHORT,
@@ -34,7 +33,6 @@ class SignupController extends ChangeNotifier {
       );
     } else {
       checkIsPassCorrect(context);
-     
     }
     notifyListeners();
   }
@@ -43,8 +41,7 @@ class SignupController extends ChangeNotifier {
     String pass = passwordController.text;
     String cPass = cPasswordController.text;
     if (pass == cPass) {
-       signUp(context);
-        
+      signUp(context);
     } else {
       isSigningUp = false;
       Fluttertoast.showToast(
@@ -58,54 +55,65 @@ class SignupController extends ChangeNotifier {
     notifyListeners();
   }
 
- Future<void> signUp(BuildContext context) async {
-  String email = emailController.text;
-  String password = passwordController.text;
-  try {
-    if (!EmailValidator.validate(email)) {
-      Fluttertoast.showToast(
-        msg: 'Please enter a valid email address',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
+  Future<void> signUp(BuildContext context) async {
+    String email = emailController.text;
+    String password = passwordController.text;
+    try {
+      if (!EmailValidator.validate(email)) {
+        Fluttertoast.showToast(
+          msg: 'Please enter a valid email address',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-  
+      String uid = userCredential.user!.uid;
+
+      saveUserData(context, uid);
+    } catch (e) {
+      isSigningUp = false;
+      log(e.toString());
+
+      if (e ==
+          '[firebase_auth/email-already-in-use] The email address is already in use by another account') {
+        Fluttertoast.showToast(
+          msg: "The email address is already in use by another account",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "An error occurred",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
     }
-
-    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    String uid = userCredential.user!.uid;
-
-    saveUserData(context, uid);
-  } catch (e) {
-    isSigningUp = false;
-    log(e.toString());
-    // Fluttertoast.showToast(
-    //   msg: e.toString(),
-    //   toastLength: Toast.LENGTH_SHORT,
-    //   gravity: ToastGravity.CENTER,
-    //   backgroundColor: Colors.red,
-    //   textColor: Colors.white,
-    //   fontSize: 16.0,
-    // );
+    notifyListeners();
   }
-  notifyListeners();
-}
 
   Future<void> saveUserData(context, String uid) async {
     try {
       String email = emailController.text;
-       
 
       Map<String, dynamic> userData = {
         'email': email,
         'fname': firstNameController.text,
         'lname': lastNameController.text,
-        'uid':uid
+        'uid': uid
       };
 
       await firestore.collection('users').doc(uid).set(userData).then((value) {
@@ -127,15 +135,14 @@ class SignupController extends ChangeNotifier {
     } catch (e) {
       log(e.toString());
       isSigningUp = false;
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      // Fluttertoast.showToast(
+      //     msg: e.toString(),
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //     fontSize: 16.0);
     }
     notifyListeners();
   }
-  
 }
