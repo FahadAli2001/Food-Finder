@@ -24,7 +24,7 @@ class FavoriteItemsController {
       if (documentSnapshot.exists) {
         await _firestore.collection('favorites').doc(documentId).delete();
         Fluttertoast.showToast(
-          msg: "Bookmark Removed",
+          msg: "Recipe Removed From Saved List",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.green,
@@ -36,7 +36,7 @@ class FavoriteItemsController {
         markFavorite(documentId, name, rating, reviewCount, description,
             imageUrl, ingredients,apiName);
         Fluttertoast.showToast(
-          msg: "Bookmark Added",
+          msg: "Recipe Added To Saved List",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.green,
