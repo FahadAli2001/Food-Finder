@@ -77,6 +77,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   ],
                 ),
+
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                loginController.islogingIn == false
+                    ? GestureDetector(
+                        onTap: () {
+                          loginController.checkIsRememberMe(context);
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: size.width,
+                          height: size.height * 0.06,
+                          color: const Color(0xffCA0000),
+                          child: Center(
+                            child: Text(
+                              'Sign In ',
+                              style: TextStyle(
+                                fontSize: size.height * 0.02,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const CircularProgressIndicator(
+                        color: Color(0xffCA0000),
+                      ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
@@ -107,33 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                loginController.islogingIn == false
-                    ? GestureDetector(
-                        onTap: () {
-                          loginController.checkIsRememberMe(context);
-                          setState(() {});
-                        },
-                        child: Container(
-                    width: size.width,
-                    height: size.height * 0.06,
-                    color: const Color(0xffCA0000),
-                    child: Center(
-                      child: Text(
-                        'Sign In ',
-                        style: TextStyle(
-                          fontSize: size.height * 0.02,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),)
-                    : const CircularProgressIndicator(
-                        color: Color(0xffCA0000),
-                      ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),

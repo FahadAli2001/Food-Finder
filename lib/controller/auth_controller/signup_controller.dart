@@ -68,6 +68,7 @@ class SignupController extends ChangeNotifier {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+        return;
       }
 
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
@@ -81,16 +82,59 @@ class SignupController extends ChangeNotifier {
       isSigningUp = false;
       log(e.toString());
 
-      if (e ==
-          '[firebase_auth/email-already-in-use] The email address is already in use by another account') {
-        Fluttertoast.showToast(
-          msg: "The email address is already in use by another account",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+      // Handle Firebase Auth errors separately
+      if (e is FirebaseAuthException) {
+        switch (e.code) {
+          case 'email-already-in-use':
+            Fluttertoast.showToast(
+              msg: "The email address is already in use by another account",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            break;
+          case 'invalid-email':
+            Fluttertoast.showToast(
+              msg: "Invalid email address",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            break;
+          case 'operation-not-allowed':
+            Fluttertoast.showToast(
+              msg: "Operation not allowed",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            break;
+          case 'weak-password':
+            Fluttertoast.showToast(
+              msg: "Weak password",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            break;
+          default:
+            Fluttertoast.showToast(
+              msg: "An error occurred",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+        }
       } else {
         Fluttertoast.showToast(
           msg: "An error occurred",
@@ -122,7 +166,7 @@ class SignupController extends ChangeNotifier {
           MaterialPageRoute(builder: (context) => const LoginScreen()),
           (route) => false,
         );
-
+        clearfields();
         isSigningUp = false;
       });
       Fluttertoast.showToast(
@@ -144,5 +188,13 @@ class SignupController extends ChangeNotifier {
       //     fontSize: 16.0);
     }
     notifyListeners();
+  }
+
+  void clearfields() {
+    firstNameController.clear();
+    lastNameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    cPasswordController.clear();
   }
 }
