@@ -32,14 +32,14 @@ class EditProfileController with ChangeNotifier {
       }
     } catch (e) {
       log('Error fetching user data: $e');
-      Fluttertoast.showToast(
-        msg: 'Error fetching user data: $e',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      // Fluttertoast.showToast(
+      //   msg: 'Error fetching user data: $e',
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.CENTER,
+      //   backgroundColor: Colors.red,
+      //   textColor: Colors.white,
+      //   fontSize: 16.0,
+      // );
     }
   }
 
@@ -82,7 +82,7 @@ Future<void> uploadUserDataAndImage(String uid, context) async {
       );
     });
   } catch (e) {
-    log('Error uploading user data and image: $e');
+    log('Error uploading user data and image ');
     isUpdating = false;
     Fluttertoast.showToast(
       msg: e.toString(),

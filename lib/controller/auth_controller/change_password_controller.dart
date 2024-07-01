@@ -75,13 +75,13 @@ class ChangePasswordController extends ChangeNotifier {
     }
   } catch (e) {
     log('Error changing password: $e');
-    Fluttertoast.showToast(
-        msg: 'Error: ${e.toString()}',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: 'Error: ${e.toString()}',
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.CENTER,
+    //     backgroundColor: Colors.red,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 }
 

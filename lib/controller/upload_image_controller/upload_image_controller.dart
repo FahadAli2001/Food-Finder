@@ -33,15 +33,24 @@ class UploadImageController extends ChangeNotifier {
         var jsonRes = await response.stream.bytesToString();
         apiResData = jsonDecode(jsonRes);
         log(apiResData.toString());
-        // log(apiResData["predicted_title"]);
-        // log(apiResData['recipe_details'][0]['ingredients']);
-        Navigator.push(
+        if (apiResData['error'] == "Please Insert Correct Image") {
+          Fluttertoast.showToast(
+          msg: 'Please Insert Correct Image',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+        } else {
+           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => DetailScreen(
                       apiData: apiResData,
                       image: image,
                     )));
+        }
+       
       } else {
         isSearching = false;
         notifyListeners();
@@ -52,13 +61,7 @@ class UploadImageController extends ChangeNotifier {
       isSearching = false;
       notifyListeners();
       log('Error sending image: $error');
-      Fluttertoast.showToast(
-          msg: 'Error Sending Image',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      
       // Handle the error
     }
   }
