@@ -8,9 +8,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/welcome_screen.dart';
-  import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginController extends ChangeNotifier{
+class LoginController extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -18,7 +18,7 @@ class LoginController extends ChangeNotifier{
   bool islogingIn = false;
   UserModel? userModel;
 
-  Future<void> loginUser(BuildContext context) async {
+Future<void> loginUser(BuildContext context) async {
   String email = emailController.text;
   String password = passwordController.text;
 
@@ -33,11 +33,12 @@ class LoginController extends ChangeNotifier{
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      
+      return;
     }
 
     islogingIn = true;
     log(islogingIn.toString());
+
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
@@ -47,7 +48,7 @@ class LoginController extends ChangeNotifier{
     sp.setString('uid', uid);
     userModel = await fetchUserData(uid);
 
-    if (userModel != null) {
+    if (userModel!= null) {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -67,14 +68,69 @@ class LoginController extends ChangeNotifier{
     log(e.toString());
     log(islogingIn.toString());
 
-    // Fluttertoast.showToast(
-    //   msg: e.toString(),
-    //   toastLength: Toast.LENGTH_SHORT,
-    //   gravity: ToastGravity.CENTER,
-    //   backgroundColor: Colors.red,
-    //   textColor: Colors.white,
-    //   fontSize: 16.0,
-    // );
+    // Handle Firebase Auth errors separately
+    if (e is FirebaseAuthException) {
+      switch (e.code) {
+        case 'user-not-found':
+          Fluttertoast.showToast(
+            msg: "User not found",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          break;
+        case 'wrong-password':
+          Fluttertoast.showToast(
+            msg: "Wrong password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          break;
+        case 'invalid-email':
+          Fluttertoast.showToast(
+            msg: "Invalid email address",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          break;
+        case 'user-disabled':
+          Fluttertoast.showToast(
+            msg: "User account is disabled",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          break;
+        default:
+          Fluttertoast.showToast(
+            msg: "An error occurred",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "An error occurred",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
   }
   notifyListeners();
 }
@@ -102,7 +158,6 @@ class LoginController extends ChangeNotifier{
   }
 
   Future<void> checkIsRememberMe(context) async {
-  
     if (rememberMe == true) {
       savedUserLogin(context);
     } else {

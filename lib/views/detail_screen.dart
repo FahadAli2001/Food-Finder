@@ -26,58 +26,71 @@ class _DetailScreenState extends State<DetailScreen> {
   FavoriteItemsController favoriteItemsController = FavoriteItemsController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
- Future<void> updateRating(String recipeId, String ratingType) async {
-  try {
-    final user = _auth.currentUser;
-    if (user == null) {
-      Fluttertoast.showToast(
-        msg: "Login First",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: const Color(0xffCA0000),
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      return;
-    }
-
-    DocumentReference recipeRef = FirebaseFirestore.instance.collection('recipes').doc(recipeId);
-    DocumentSnapshot recipeSnapshot = await recipeRef.get();
-
-    if (recipeSnapshot.exists) {
-      Map<String, dynamic> data = recipeSnapshot.data() as Map<String, dynamic>;
-      String ratingsString = data['reviewCount'] ?? '0';
-      int thumbsCount = int.tryParse(ratingsString) ?? 0;
-
-      if (ratingType == 'thumbsUp') {
-        thumbsCount++;
+  Future<void> updateRating(String recipeId, String ratingType) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) {
         Fluttertoast.showToast(
-          msg: "Thanks for your review!",
+          msg: "Login First",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.green,
+          backgroundColor: const Color(0xffCA0000),
           textColor: Colors.white,
           fontSize: 16.0,
         );
-      } else if (ratingType == 'thumbsDown') {
-        thumbsCount--;
+        return;
+      }
+
+      DocumentReference recipeRef =
+          FirebaseFirestore.instance.collection('recipes').doc(recipeId);
+      DocumentSnapshot recipeSnapshot = await recipeRef.get();
+
+      if (recipeSnapshot.exists) {
+        Map<String, dynamic> data =
+            recipeSnapshot.data() as Map<String, dynamic>;
+        String ratingsString = data['reviewCount'] ?? '0';
+        int thumbsCount = int.tryParse(ratingsString) ?? 0;
+
+        if (ratingType == 'thumbsUp') {
+          thumbsCount++;
+          Fluttertoast.showToast(
+            msg: "Thanks for your review!",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        } else if (ratingType == 'thumbsDown') {
+          thumbsCount--;
+          Fluttertoast.showToast(
+            msg: "Thanks for your review!",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
+
+        await recipeRef.update({
+          'reviewCount': thumbsCount.toString(),
+        });
+      } else {
+        // Handle the case where the recipe doesn't exist
         Fluttertoast.showToast(
-          msg: "Thanks for your review!",
+          msg: "Recipe not found",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.green,
+          backgroundColor: const Color(0xffCA0000),
           textColor: Colors.white,
           fontSize: 16.0,
         );
       }
-
-      await recipeRef.update({
-        'reviewCount': thumbsCount.toString(),
-      });
-    } else {
-      // Handle the case where the recipe doesn't exist
+    } catch (e) {
+      // Handle errors
       Fluttertoast.showToast(
-        msg: "Recipe not found",
+        msg: "Error: ${e.toString()}",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         backgroundColor: const Color(0xffCA0000),
@@ -85,20 +98,7 @@ class _DetailScreenState extends State<DetailScreen> {
         fontSize: 16.0,
       );
     }
-  } catch (e) {
-    // Handle errors
-    Fluttertoast.showToast(
-      msg: "Error: ${e.toString()}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: const Color(0xffCA0000),
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
   }
-}
-
-
 
   Future<void> checkAndNavigate(String title) async {
     try {
@@ -165,44 +165,46 @@ class _DetailScreenState extends State<DetailScreen> {
           padding: const EdgeInsets.all(15),
           child: GestureDetector(
             onTap: () {
-                     try {
-          if (widget.apiData != null &&
-              widget.apiData !.containsKey('recipe_details') &&
-              widget.apiData !["recipe_details"] is List &&
-              widget.apiData !["recipe_details"].isNotEmpty &&
-              widget.apiData !["recipe_details"][0].containsKey('title') &&
-              widget.apiData !["recipe_details"][0]['title'].isNotEmpty) {
-            checkAndNavigate(widget.apiData !["recipe_details"][0]['title']);
-
-          } else if (widget.recipe != null && widget.recipe!.containsKey('title') && widget.recipe!['title'].isNotEmpty) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MapScreen(
-                  keyword: widget.recipe!['title'],
-                ),
-              ),
-            );
-          } else {
-            Fluttertoast.showToast(
-              msg: "Something went wrong",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: const Color(0xffCA0000),
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          }
-        } catch (e) {
-          Fluttertoast.showToast(
-            msg: "An error occurred: ${e.toString()}",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: const Color(0xffCA0000),
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        }
+              try {
+                if (widget.apiData != null &&
+                    widget.apiData!.containsKey('recipe_details') &&
+                    widget.apiData!["recipe_details"] is List &&
+                    widget.apiData!["recipe_details"].isNotEmpty &&
+                    widget.apiData!["recipe_details"][0].containsKey('title') &&
+                    widget.apiData!["recipe_details"][0]['title'].isNotEmpty) {
+                  checkAndNavigate(
+                      widget.apiData!["recipe_details"][0]['title']);
+                } else if (widget.recipe != null &&
+                    widget.recipe!.containsKey('title') &&
+                    widget.recipe!['title'].isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MapScreen(
+                        keyword: widget.recipe!['title'],
+                      ),
+                    ),
+                  );
+                } else {
+                  Fluttertoast.showToast(
+                    msg: "Something went wrong",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: const Color(0xffCA0000),
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+              } catch (e) {
+                Fluttertoast.showToast(
+                  msg: "An error occurred: ${e.toString()}",
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  backgroundColor: const Color(0xffCA0000),
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+              }
             },
             child: Container(
               width: size.width,
@@ -277,10 +279,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               widget.apiData != null
                                   ? widget.apiData['ingredients']
                                   : widget.recipe?['ingredients'],
-                               widget.apiData != null
+                              widget.apiData != null
                                   ? widget.apiData["recipe_details"][0]['title']
                                   : widget.recipe['apiName'],
-
                             );
                           },
                           child: StreamBuilder<DocumentSnapshot>(
@@ -369,93 +370,93 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
               const SizedBox(height: 20),
               Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    Expanded(
-      flex: 1,
-      child: GestureDetector(
-        onTap: () {
-          if (_auth.currentUser == null) {
-            Fluttertoast.showToast(
-              msg: "Login First",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: const Color(0xffCA0000),
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          } else {
-            updateRating(widget.recipeId, 'thumbsUp');
-          }
-        },
-        child: Container(
-          height: size.height * 0.06,
-          decoration: BoxDecoration(color: const Color(0xffCA0000)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Useful ',
-                style: TextStyle(
-                  fontSize: size.height * 0.02,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const Icon(
-                Icons.thumb_up,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-    Expanded(
-      flex: 1,
-      child: GestureDetector(
-        onTap: () {
-          if (_auth.currentUser == null) {
-            Fluttertoast.showToast(
-              msg: "Login First",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: const Color(0xffCA0000),
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          } else {
-            updateRating(widget.recipeId, 'thumbsDown');
-          }
-        },
-        child: Container(
-          height: size.height * 0.06,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade700,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Not Useful ',
-                style: TextStyle(
-                  fontSize: size.height * 0.02,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const Icon(
-                Icons.thumb_down,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  ],
-)
-
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_auth.currentUser == null) {
+                          Fluttertoast.showToast(
+                            msg: "Login First",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xffCA0000),
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        } else {
+                          updateRating(widget.recipeId, 'thumbsUp');
+                        }
+                      },
+                      child: Container(
+                        height: size.height * 0.06,
+                        decoration:
+                            BoxDecoration(color: const Color(0xffCA0000)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Useful ',
+                              style: TextStyle(
+                                fontSize: size.height * 0.02,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.thumb_up,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_auth.currentUser == null) {
+                          Fluttertoast.showToast(
+                            msg: "Login First",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xffCA0000),
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        } else {
+                          updateRating(widget.recipeId, 'thumbsDown');
+                        }
+                      },
+                      child: Container(
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade700,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Not Useful ',
+                              style: TextStyle(
+                                fontSize: size.height * 0.02,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.thumb_down,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           )),
         ));
