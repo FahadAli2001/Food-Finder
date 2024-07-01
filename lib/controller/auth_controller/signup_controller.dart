@@ -118,7 +118,7 @@ class SignupController extends ChangeNotifier {
         isSigningUp = false;
       });
       Fluttertoast.showToast(
-          msg: 'User Saved',
+          msg: 'User Created',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           backgroundColor: Colors.green,

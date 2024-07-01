@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.sizeOf(context).height*0.06,
       child: TextField(
+        cursorHeight: 17,
         controller:controller ,
         obscureText:obsecure!,
         style:const TextStyle(color: Colors.white70),
