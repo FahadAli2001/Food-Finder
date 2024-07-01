@@ -15,14 +15,13 @@ class UploadImageScreen extends StatefulWidget {
 class _UploadImageScreenState extends State<UploadImageScreen> {
   UploadImageController uploadImageController = UploadImageController();
 
-
   Future getImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
 
     setState(() {
       if (pickedFile != null) {
         uploadImageController.image = File(pickedFile.path);
-         uploadImageController.sendImageToAPI(context);
+        uploadImageController.sendImageToAPI(context);
       } else {
         log('No image selected.');
       }
@@ -37,16 +36,19 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              )),
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
         backgroundColor: Colors.black,
         elevation: 0,
-        title: Image.asset(logo,width: size.width*0.5,),
+        title: Image.asset(
+          logo,
+          width: size.width * 0.5,
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -58,28 +60,32 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
             uploadImageController.image == null
                 ? Center(child: Image.asset(uploadImage))
                 : Center(child: Image.file(uploadImageController.image!)),
-              SizedBox(
-              height: size.height *0.1,
+            SizedBox(
+              height: size.height * 0.1,
             ),
-         uploadImageController.isSearching == true ?CircularProgressIndicator():   Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                    onTap: () {
-                      getImage(ImageSource.camera);
-                      
-                    },
-                    child: Image.asset(captureImageBtn)),
-                  SizedBox(
-                  width: size.width *0.02,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      getImage(ImageSource.gallery);
-                    },
-                    child: Image.asset(browseFileBtn))
-              ],
-            )
+            uploadImageController.isSearching == true
+                ? CircularProgressIndicator()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            getImage(ImageSource.camera);
+                          },
+                          child: Image.asset(captureImageBtn,
+                          width: size.width *0.4),)
+                          ,
+                      SizedBox(
+                        width: size.width * 0.02,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            getImage(ImageSource.gallery);
+                          },
+                          child: Image.asset(browseFileBtn,
+                          width: size.width *0.4))
+                    ],
+                  )
           ],
         ),
       ),
