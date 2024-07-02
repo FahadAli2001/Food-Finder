@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/detail_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,7 @@ class UploadImageController extends ChangeNotifier {
     _apiResData = value;
   }
 
-  Future<void> sendImageToAPI(context) async {
+  Future<void> sendImageToAPI(context,UserModel? user) async {
     isSearching = true;
     notifyListeners();
     log("send image $image");
@@ -49,6 +50,7 @@ class UploadImageController extends ChangeNotifier {
               context,
               MaterialPageRoute(
                   builder: (context) => DetailScreen(
+                    user: user,
                         apiData: apiResData,
                         image: image,
                       )));

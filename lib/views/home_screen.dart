@@ -205,6 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => DetailScreen(
+                                          user: widget.userModel,
                                           recipe: data,
                                           recipeId:
                                               snapshot.data!.docs[index].id,

@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:foodfinder/const/images.dart';
 import 'package:foodfinder/controller/upload_image_controller/upload_image_controller.dart';
+import 'package:foodfinder/model/user_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadImageScreen extends StatefulWidget {
-  const UploadImageScreen({super.key});
+  final UserModel? user;
+  const UploadImageScreen({super.key,this.user});
 
   @override
   State<UploadImageScreen> createState() => _UploadImageScreenState();
@@ -15,13 +17,13 @@ class UploadImageScreen extends StatefulWidget {
 class _UploadImageScreenState extends State<UploadImageScreen> {
   UploadImageController uploadImageController = UploadImageController();
 
-  Future getImage(ImageSource imageSource) async {
+  Future getImage(ImageSource imageSource,UserModel? user) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
 
     setState(() {
       if (pickedFile != null) {
         uploadImageController.image = File(pickedFile.path);
-        uploadImageController.sendImageToAPI(context);
+        uploadImageController.sendImageToAPI(context,user);
       } else {
         log('No image selected.');
       }
@@ -70,7 +72,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            getImage(ImageSource.camera);
+                            getImage(ImageSource.camera,widget.user);
                           },
                           child: Image.asset(captureImageBtn,
                           width: size.width *0.4),)
@@ -80,7 +82,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            getImage(ImageSource.gallery);
+                            getImage(ImageSource.gallery,widget.user);
                           },
                           child: Image.asset(browseFileBtn,
                           width: size.width *0.4))
