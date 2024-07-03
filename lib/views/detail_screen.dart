@@ -19,7 +19,12 @@ class DetailScreen extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   var image;
   DetailScreen(
-      {super.key, this.apiData, this.image, this.recipe, this.recipeId,this.user});
+      {super.key,
+      this.apiData,
+      this.image,
+      this.recipe,
+      this.recipeId,
+      this.user});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -150,11 +155,11 @@ class _DetailScreenState extends State<DetailScreen> {
         appBar: AppBar(
           leading: GestureDetector(
               onTap: () {
-               Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>   HomeScreen(
-                              userModel:widget.user ,
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreen(
+                              userModel: widget.user,
                             )));
               },
               child: const Icon(
@@ -256,7 +261,9 @@ class _DetailScreenState extends State<DetailScreen> {
                 children: [
                   Text(
                     widget.apiData != null
-                        ? widget.apiData["recipe_details"][0]['title'] ?? ''
+                        ? widget.apiData["recipe_details"][0]['title']
+                                .replaceAll('_', ' ') ??
+                            ''
                         : widget.recipe?['title'] ?? 'Default Title',
                     style: const TextStyle(
                       color: Colors.white,
