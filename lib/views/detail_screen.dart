@@ -7,6 +7,7 @@ import 'package:foodfinder/controller/favorite_items_controller/favorite_items_c
 import 'package:foodfinder/model/user_model.dart';
 import 'package:foodfinder/views/home_screen.dart';
 import 'package:foodfinder/views/map_screen.dart';
+import 'package:uuid/uuid.dart';
 
 // ignore: must_be_immutable
 class DetailScreen extends StatefulWidget {
@@ -33,6 +34,7 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   FavoriteItemsController favoriteItemsController = FavoriteItemsController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final uuid = Uuid();
 
   Future<void> updateRating(String recipeId, String ratingType) async {
     try {
@@ -274,25 +276,28 @@ class _DetailScreenState extends State<DetailScreen> {
                   _auth.currentUser != null
                       ? GestureDetector(
                           onTap: () {
+                           
                             favoriteItemsController.checkFavorite(
-                              widget.recipeId,
+                              widget.recipeId ?? widget.apiData["recipe_details"][0]['title'],
                               widget.apiData != null
-                                  ? widget.apiData['name']
+                                  ? widget.apiData["recipe_details"][0]['title']
+                                      .replaceAll('_', ' ')
                                   : widget.recipe?['title'],
                               widget.apiData != null
-                                  ? widget.apiData['ratings']
+                                  ? widget.apiData['ratings'] ?? '4'
                                   : widget.recipe?['ratings'],
                               widget.apiData != null
-                                  ? widget.apiData['reviewCount']
+                                  ? widget.apiData['reviewCount'] ?? ""
                                   : widget.recipe?['reviewCount'],
                               widget.apiData != null
-                                  ? widget.apiData['description']
+                                  ? widget.apiData["recipe_details"][0]
+                                      ['instructions']
                                   : widget.recipe?['instructions'],
                               widget.apiData != null
-                                  ? widget.apiData['imageUrl']
+                                  ? widget.image
                                   : widget.recipe?['imageUrl'],
                               widget.apiData != null
-                                  ? widget.apiData['ingredients']
+                                  ? widget.apiData["recipe_details"]
                                   : widget.recipe?['ingredients'],
                               widget.apiData != null
                                   ? widget.apiData["recipe_details"][0]['title']
@@ -302,7 +307,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           child: StreamBuilder<DocumentSnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('favorites')
-                                .doc(widget.recipeId)
+                                .doc(widget.recipeId ?? widget.apiData["recipe_details"][0]['title'] )
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
