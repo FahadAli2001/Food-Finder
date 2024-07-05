@@ -170,7 +170,8 @@ class _DetailScreenState extends State<DetailScreen> {
               )),
           backgroundColor: Colors.black,
           elevation: 0,
-          title: Image.asset(
+          title: 
+           Image.asset(
             logo,
             width: size.width * 0.5,
           ),
@@ -287,7 +288,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   ? widget.apiData['ratings'] ?? '4'
                                   : widget.recipe?['ratings'],
                               widget.apiData != null
-                                  ? widget.apiData['reviewCount'] ?? ""
+                                  ? widget.apiData['reviewCount'] ?? "N/A"
                                   : widget.recipe?['reviewCount'],
                               widget.apiData != null
                                   ? widget.apiData["recipe_details"][0]

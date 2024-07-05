@@ -45,10 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
- 
-
-
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -183,15 +179,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           } else if (snapshot.hasError) {
                             return Center(
                                 child: Text('Error: ${snapshot.error}'));
-                          }else if(
-                            snapshot.data!.docs.isEmpty
-                          ){
+                          } else if (snapshot.data!.docs.isEmpty) {
                             return Center(
-                              child: Text('No Recipe Found !',
-                              style: TextStyle(color: Colors.white60),),
+                              child: Text(
+                                'No Recipe Found !',
+                                style: TextStyle(color: Colors.white60),
+                              ),
                             );
                           } else {
-                           
                             log('Query results: ${snapshot.data!.docs}');
                             return ListView.builder(
                               itemCount: snapshot.data!.docs.length,
@@ -201,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         as Map<String, dynamic>;
                                 return GestureDetector(
                                   onTap: () {
+                                    log('widget.userModel: ${widget.userModel}');
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -231,7 +227,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     )
                   : Expanded(
-                    
                       child: Column(
                         children: [
                           Row(
@@ -280,6 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     DetailScreen(
+                                                      user: widget.userModel,
                                                   recipe: data,
                                                   recipeId: snapshot
                                                       .data!.docs[index].id,
@@ -291,10 +287,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             id: snapshot.data!.docs[index].id,
                                             name: data['title'] ?? '',
                                             rating: data['ratings'] ?? '0',
-                                            reviewCount: data['reviewCount'] ?? '',
-                                            description: data['instructions'] ?? '',
+                                            reviewCount:
+                                                data['reviewCount'] ?? '',
+                                            description:
+                                                data['instructions'] ?? '',
                                             imageUrl: data['imageUrl'] ?? '',
-                                            ingredients: data['ingredients'] ?? '',
+                                            ingredients:
+                                                data['ingredients'] ?? '',
                                             apiName: data['apiName'] ?? '',
                                           ),
                                         );
